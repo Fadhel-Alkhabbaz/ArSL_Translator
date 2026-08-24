@@ -1,6 +1,6 @@
 import streamlit as st
 
-# تأمين التحديث التلقائي للواجهة السحابية
+# حل مشكلة التوافقية وإجبار الواجهة على التحديث الفوري سحابياً
 if not hasattr(st, "experimental_rerun"):
     st.experimental_rerun = st.rerun
 
@@ -91,7 +91,6 @@ class SignLanguageTransformer:
         self.current_detected_word = ""
         
         if ort_session is not None:
-            # قراءة الكشاف الصافي لاسم مدخلات الـ ONNX بدقة حادة وتفادي أخطاء الـ List
             inputs = ort_session.get_inputs()
             self.input_name = inputs[0].name if isinstance(inputs, list) else inputs.name
 
@@ -102,7 +101,6 @@ class SignLanguageTransformer:
         
         rgb_frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         
-        # أخذ لقطة كل إطارين لتسريع الأداء السحابي ومنع الـ Lag تماماً
         if self.frame_counter % 2 == 0:
             resized = cv2.resize(rgb_frame, self.target_size)
             normalized_frame = resized / 255.0
@@ -111,7 +109,6 @@ class SignLanguageTransformer:
             if len(self.sequence_buffers) > self.max_frames:
                 self.sequence_buffers.pop(0)
                 
-            # تشغيل التنبؤ الفوري والمستقر عبر ONNX
             if len(self.sequence_buffers) == self.max_frames and ort_session is not None:
                 input_data = np.expand_dims(np.array(self.sequence_buffers, dtype=np.float32), axis=0)
                 outputs = ort_session.run(None, {self.input_name: input_data})
@@ -120,20 +117,17 @@ class SignLanguageTransformer:
                 predicted_class_idx = np.argmax(predictions)
                 confidence = predictions[predicted_class_idx]
                 
-                # عتبة الثقة المعتمدة سحابياً لفلترة أي حركات عشوائية
                 if confidence > 0.55:
                     try:
                         detected_word = class_labels[predicted_class_idx]
                         self.live_word = f"Sign: {detected_word} ({confidence*100:.0f}%)"
                         
-                        # آلية تجميع الجمل المتسلسلة: يجب ثبات اليد لـ 3 لقطات متتالية للتأكيد
                         if detected_word == self.current_detected_word:
                             self.stability_counter += 1
                         else:
                             self.current_detected_word = detected_word
                             self.stability_counter = 0
                         
-                        # قذف الكلمة في الطابور لمنع الكراش
                         if self.stability_counter >= 3 and detected_word != self.last_added_word:
                             word_queue.put(detected_word)
                             self.last_added_word = detected_word
@@ -143,23 +137,24 @@ class SignLanguageTransformer:
                 else:
                     self.live_word = "Scanning..."
 
-        # كتابة الكلمة والـ ID اللحظي مباشرة فوق بث الكاميرا لايف باللون الأخضر الواضح
         cv2.putText(img, self.live_word, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2, cv2.LINE_AA)
-
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
-# 3. تشغيل ملقم البث السحابي النقي والخالي من السيرفرات الخارجية المعطلة
+# 3. تشغيل ملقم البث السحابي النقي الخالي من أي سيرفر STUN خارجي مسبب للانهيار
 if ort_session is not None:
     webrtc_streamer(
-        key="sign-language-translator-cloud-final-v13", # 🔥 تم تغيير المفتاح لمسح الكاش كلياً وحذف سطر rtc_configuration
+        key="sign-language-translator-cloud-final-v14", # مفتاح جديد لمسح الكاش السحابي
         mode=WebRtcMode.SENDRECV,
         video_frame_callback=SignLanguageTransformer().recv,
+        # 🟢 قمنا بتصفية خيارات الشبكة وجعلها فارغة تماماً لمنع مكتبة aioice من محاولة استعمال بروتوكول UDP المسبب للكراش
+        rtc_configuration={
+            "iceServers": [] 
+        },
         media_stream_constraints={
             "video": True,
             "audio": False
         }
     )
 
-# سطر إضافي لتحديث الشاشة فوراً عند وصول كلمة جديدة في الطابور
 if not word_queue.empty():
     st.rerun()
