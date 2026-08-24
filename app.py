@@ -43,7 +43,7 @@ class_labels = load_labels()
 if "translated_sentence" not in st.session_state:
     st.session_state.translated_sentence = []
 
-# 🔥 إنشاء خزان طابور آمن للخيوط لنقل الكلمات من الكاميرا للواجهة بدون كراش
+# إنشاء خزان طابور آمن للخيوط لنقل الكلمات من الكاميرا للواجهة بدون كراش
 @st.cache_resource
 def get_word_queue():
     return queue.Queue()
@@ -132,7 +132,7 @@ class SignLanguageTransformer:
                             self.current_detected_word = detected_word
                             self.stability_counter = 0
                         
-                        # 🔥 الحل الحاسم: قذف الكلمة في الطابور بدلاً من حقنها المباشر في الـ Session State لمنع خطأ الـ AttributeError
+                        # قذف الكلمة في الطابور بدلاً من حقنها المباشر في الـ Session State لمنع أخطاء الخيوط
                         if self.stability_counter >= 3 and detected_word != self.last_added_word:
                             word_queue.put(detected_word)
                             self.last_added_word = detected_word
@@ -147,12 +147,17 @@ class SignLanguageTransformer:
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
-# 3. تشغيل ملقم البث السحابي المحدث بكود كشاف مسح الكاش الصارم
+# 3. تشغيل ملقم البث السحابي المحدث بتثبيت بروتوكول البث النقي وتفادي كراش السيرفر
 if ort_session is not None:
     webrtc_streamer(
-        key="sign-language-translator-cloud-final-v11", # تغيير الـ key لتطهير كاش المنصة حتماً وقراءة التحديث
+        key="sign-language-translator-cloud-final-v12", # تغيير الـ key لتطهير كاش المنصة حتماً وقراءة التحديث
         mode=WebRtcMode.SENDRECV,
         video_frame_callback=SignLanguageTransformer().recv,
+        # 🟢 الضبط الجذري: نمرر عنوان السيرفر مع تقييد الـ ICE لمنع انهيار الخيوط الشبكية في السيرفرات السحابية
+        rtc_configuration={
+            "iceServers": [{"urls": ["stun:://google.com"]}],
+            "iceTransportPolicy": "all"
+        },
         media_stream_constraints={
             "video": True,
             "audio": False
