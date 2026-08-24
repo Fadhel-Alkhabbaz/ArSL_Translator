@@ -101,15 +101,11 @@ class SignLanguageTransformer:
 if ort_session is not None:
     processor = SignLanguageTransformer()
     webrtc_streamer(
-        key="sign-language-translator-cloud-v3",
+        key="sign-language-translator-cloud-final",
         video_frame_callback=processor.recv,
-        # 🟢 حذفنا سطر rtc_configuration تماماً لتفادي مشاكل الأمان وعناوين الـ Hostname في السيرفرات
+        # 🟢 جعلنا محددات الفيديو تلقائية بالكامل (True) لتخطي خطأ السورس وتعمل الكاميرا فوراً
         media_stream_constraints={
-            "video": {
-                "width": {"ideal": 640},
-                "height": {"ideal": 480},
-                "frameRate": {"ideal": 30}
-            },
+            "video": True,
             "audio": False
         }
     )
