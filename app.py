@@ -46,7 +46,8 @@ class SignLanguageTransformer:
         self.frame_counter = 0
         self.display_text = "Scanning..." # النص الافتراضي على الشاشة
         if ort_session is not None:
-            self.input_name = ort_session.get_inputs().name
+            # 🔥 تم تصحيح الكشاف هنا برمجياً بإضافة [0] لقراءة اسم المدخلات من القائمة بنجاح
+            self.input_name = ort_session.get_inputs()[0].name
 
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -76,15 +77,13 @@ class SignLanguageTransformer:
                 # إذا تخطت نسبة الثقة 50% نقوم بتحديث النص المكتوب فوراً
                 if confidence > 0.50:
                     try:
-                        # جلب اسم الإشارة (تظهر برقم الـ ID والاسم لضمان مطابقة الـ 502 كلمة عالمياً)
                         self.display_text = f"Sign: {class_labels[predicted_class_idx]}"
                     except:
                         self.display_text = f"Sign ID: {predicted_class_idx + 1}"
                 else:
                     self.display_text = "Scanning..."
 
-        # 🔥 الخطوة السحرية: كتابة الكلمة المترجمة مباشرة فوق فيديو المستخدم لايف وبشكل فوري
-        # تظهر بخط واضح باللون الأخضر بالأعلى لتتغير في نفس اللحظة مع حركة يدك
+        # كتابة الكلمة المترجمة مباشرة فوق فيديو المستخدم لايف وبشكل فوري باللون الأخضر
         cv2.putText(img, self.display_text, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2, cv2.LINE_AA)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
@@ -93,7 +92,7 @@ class SignLanguageTransformer:
 if ort_session is not None:
     processor = SignLanguageTransformer()
     webrtc_streamer(
-        key="sign-language-translator-cloud-final-v4",
+        key="sign-language-translator-cloud-final-v5",
         video_frame_callback=processor.recv,
         media_stream_constraints={
             "video": True,
