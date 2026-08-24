@@ -46,8 +46,9 @@ class SignLanguageTransformer:
         self.frame_counter = 0
         self.display_text = "Scanning..." # النص الافتراضي على الشاشة
         if ort_session is not None:
-            # 🔥 تم تصحيح الكشاف هنا برمجياً بإضافة [0] لقراءة اسم المدخلات من القائمة بنجاح
-            self.input_name = ort_session.get_inputs()[0].name
+            # 🟢 الضبط البرمجي السحري والجذري: قراءة اسم المدخلات بشكل ديناميكي مرن يتوافق مع أي إصدار
+            inputs = ort_session.get_inputs()
+            self.input_name = inputs[0].name if isinstance(inputs, list) else inputs.name
 
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -92,7 +93,7 @@ class SignLanguageTransformer:
 if ort_session is not None:
     processor = SignLanguageTransformer()
     webrtc_streamer(
-        key="sign-language-translator-cloud-final-v5",
+        key="sign-language-translator-cloud-final-v6", # تم تغيير الـ key لإجبار المنصة على مسح الكاش فوراً
         video_frame_callback=processor.recv,
         media_stream_constraints={
             "video": True,
