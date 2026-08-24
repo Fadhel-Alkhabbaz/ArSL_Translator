@@ -11,10 +11,12 @@ import pandas as pd
 import os
 import av
 
+# 1. إعداد واجهة المستخدم السحابية الاحترافية لمشروع التخرج
 st.set_page_config(page_title="Arabic Sign Language System", layout="centered")
 st.title("🤖 نظام الترجمة الفورية الحية للغة الإشارة العربية (ArSL)")
-st.write("الرابط السحابي نشط الآن! اسمح للمتصفح بفتح الكاميرا لبدء الترجمة وبناء الجمل.")
+st.write("الرابط السحابي نشط! الترجمة الفورية تظهر الآن مباشرة مكتوبة فوق شاشة الفيديو لايف.")
 
+# تحميل موديل ONNX والأسماء من ملف الإكسل مرة واحدة لحفظ الذاكرة
 @st.cache_resource
 def load_onnx_session():
     model_path = "arabic_sign_model.onnx"
@@ -30,50 +32,31 @@ def load_labels():
             df = pd.read_excel(excel_path)
             return df.iloc[:, 1].astype(str).str.strip().tolist()
         except: pass
-    return [f"إشارة {i+1}" for i in range(502)]
+    return [f"Word {i+1}" for i in range(502)]
 
 ort_session = load_onnx_session()
 class_labels = load_labels()
 
-if "translated_sentence" not in st.session_state:
-    st.session_state.translated_sentence = []
-
-st.markdown("---")
-st.markdown("### 📝 الجملة المترجمة الحالية (مستمرة):")
-sentence_placeholder = st.empty()
-
-def update_sentence_display():
-    full_sentence = " ".join(st.session_state.translated_sentence)
-    if full_sentence:
-        sentence_placeholder.markdown(f"<h1 style='text-align: center; color: #FF4B4B; direction: rtl;'>{full_sentence}</h1>", unsafe_allow_html=True)
-    else:
-        sentence_placeholder.markdown("<h3 style='text-align: center; color: #777;'>في انتظار تتبع الحركات الحية لبناء الجملة...</h3>", unsafe_allow_html=True)
-
-update_sentence_display()
-
-if st.button("🗑️ مسح الجملة والبدء من جديد", type="secondary"):
-    st.session_state.translated_sentence = []
-    st.rerun()
-
-st.markdown("---")
-
+# 2. كلاس معالجة دفق الفيديو المباشر فائق السرعة
 class SignLanguageTransformer:
     def __init__(self):
         self.sequence_buffers = []
         self.max_frames = 5
         self.target_size = (64, 64)
         self.frame_counter = 0
+        self.display_text = "Scanning..." # النص الافتراضي على الشاشة
         if ort_session is not None:
-            self.input_name = ort_session.get_inputs()[0].name
+            self.input_name = ort_session.get_inputs().name
 
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
-        img = cv2.flip(img, 1)
+        img = cv2.flip(img, 1) # قلب الصورة كالمرآة لسهولة الاستخدام
         self.frame_counter += 1
         
         rgb_frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         
-        if self.frame_counter % 3 == 0:
+        # أخذ لقطة كل إطارين لتسريع المعالجة السحابية وتقليل الـ Lag
+        if self.frame_counter % 2 == 0:
             resized = cv2.resize(rgb_frame, self.target_size)
             normalized_frame = resized / 255.0
             self.sequence_buffers.append(normalized_frame)
@@ -81,6 +64,7 @@ class SignLanguageTransformer:
             if len(self.sequence_buffers) > self.max_frames:
                 self.sequence_buffers.pop(0)
                 
+            # تشغيل التنبؤ الفوري عبر ONNX
             if len(self.sequence_buffers) == self.max_frames and ort_session is not None:
                 input_data = np.expand_dims(np.array(self.sequence_buffers, dtype=np.float32), axis=0)
                 outputs = ort_session.run(None, {self.input_name: input_data})
@@ -89,21 +73,28 @@ class SignLanguageTransformer:
                 predicted_class_idx = np.argmax(predictions)
                 confidence = predictions[predicted_class_idx]
                 
-                if confidence > 0.60:
+                # إذا تخطت نسبة الثقة 50% نقوم بتحديث النص المكتوب فوراً
+                if confidence > 0.50:
                     try:
-                        detected_word = class_labels[predicted_class_idx]
-                        if not st.session_state.translated_sentence or st.session_state.translated_sentence[-1] != detected_word:
-                            st.session_state.translated_sentence.append(detected_word)
-                    except: pass
+                        # جلب اسم الإشارة (تظهر برقم الـ ID والاسم لضمان مطابقة الـ 502 كلمة عالمياً)
+                        self.display_text = f"Sign: {class_labels[predicted_class_idx]}"
+                    except:
+                        self.display_text = f"Sign ID: {predicted_class_idx + 1}"
+                else:
+                    self.display_text = "Scanning..."
+
+        # 🔥 الخطوة السحرية: كتابة الكلمة المترجمة مباشرة فوق فيديو المستخدم لايف وبشكل فوري
+        # تظهر بخط واضح باللون الأخضر بالأعلى لتتغير في نفس اللحظة مع حركة يدك
+        cv2.putText(img, self.display_text, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2, cv2.LINE_AA)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
+# 3. تشغيل ملقم البث السحابي
 if ort_session is not None:
     processor = SignLanguageTransformer()
     webrtc_streamer(
-        key="sign-language-translator-cloud-final",
+        key="sign-language-translator-cloud-final-v4",
         video_frame_callback=processor.recv,
-        # 🟢 جعلنا محددات الفيديو تلقائية بالكامل (True) لتخطي خطأ السورس وتعمل الكاميرا فوراً
         media_stream_constraints={
             "video": True,
             "audio": False
