@@ -1,23 +1,17 @@
 import streamlit as st
-
-# حل مشكلة التوافقية للإصدارات الحديثة في Streamlit السحابي
-if not hasattr(st, "experimental_rerun"):
-    st.experimental_rerun = st.rerun
-
-from streamlit_webrtc import webrtc_streamer
 import cv2
 import numpy as np
 import onnxruntime as ort
 import pandas as pd
 import os
-import av
+import time
 
-# 1. إعداد واجهة المستخدم السحابية الاحترافية لمشروع التخرج
+# 1. إعداد واجهة المستخدم الاحترافية لمشروع التخرج
 st.set_page_config(page_title="Arabic Sign Language System", layout="centered")
 st.title("🤖 نظام الترجمة الفورية الحية للغة الإشارة العربية (ArSL)")
-st.write("الرابط السحابي نشط الآن! اسمح للمتصفح بفتح الكاميرا لبدء الترجمة وبناء الجمل.")
+st.write("أدِّ الحركات المتتالية بوضوح أمام الكاميرا لبناء جملة كاملة ومستمرة باللغة العربية.")
 
-# تحميل موديل ONNX والأسماء من ملف الإكسل مرة واحدة لحفظ الذاكرة السحابية
+# تحميل موديل ONNX والأسماء من ملف الإكسل مرة واحدة لحفظ الذاكرة
 @st.cache_resource
 def load_onnx_session():
     model_path = "arabic_sign_model.onnx"
@@ -38,11 +32,11 @@ def load_labels():
 ort_session = load_onnx_session()
 class_labels = load_labels()
 
-# تهيئة ذاكرة الجملة التراكمية في الـ Session State
+# تهيئة ذاكرة الجملة التراكمية في الـ Session State لكي لا تختفي الكلمات
 if "translated_sentence" not in st.session_state:
     st.session_state.translated_sentence = []
 
-# عرض الجملة التراكمية الكبيرة في المقدمة
+# عرض الجملة التراكمية الكبيرة في المقدمة بخط عريض ولون جذاب
 st.markdown("---")
 st.markdown("### 📝 الجملة المترجمة الحالية (مستمرة):")
 sentence_placeholder = st.empty()
@@ -63,69 +57,81 @@ if st.button("🗑️ مسح الجملة والبدء من جديد", type="sec
 
 st.markdown("---")
 
-# 2. كلاس معالجة دفق الفيديو المباشر سحابياً عبر بروتوكول WebRTC
-class SignLanguageTransformer:
-    def __init__(self):
-        self.sequence_buffers = []
-        self.max_frames = 5
-        self.target_size = (64, 64)
-        self.frame_counter = 0
-        if ort_session is not None:
-            self.input_name = ort_session.get_inputs()[0].name
+# حجز مكان عرض الكاميرا لايف داخل الصفحة
+frame_placeholder = st.empty()
 
-    def recv(self, frame):
-        # سحب الإطار الحالي كمصفوفة NumPy مباشرة من بث متصفح المستخدم
-        img = frame.to_ndarray(format="bgr24")
-        img = cv2.flip(img, 1) # قلب الصورة كالمرآة لراحة المستخدم
-        self.frame_counter += 1
+# 2. زر تشغيل الكاميرا المباشرة والترجمة الفورية
+if st.button("📸 ابدأ البث الحي والترجمة الفورية داخل الصفحة", type="primary"):
+    if ort_session is not None:
+        input_name = ort_session.get_inputs()[0].name
+        sequence_buffers = []
+        max_frames = 5
+        target_size = (64, 64)
         
-        # تحويل الألوان وتجهيز الإطار (RGB) المتطابق مع أوزان الموديل
-        rgb_frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        last_added_word = ""
+        stability_counter = 0
+        current_detected_word = ""
+        frame_counter = 0 # عداد داخلي لتوسيع الفارق الزمني بين اللقطات
+
+        cap = cv2.VideoCapture(0)
         
-        # المؤقت الحركي المتباعد: نأخذ لقطة كل 3 إطارات لتأمين الحركة كاملة للـ GRU
-        if self.frame_counter % 3 == 0:
-            resized = cv2.resize(rgb_frame, self.target_size)
-            normalized_frame = resized / 255.0
-            self.sequence_buffers.append(normalized_frame)
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret: 
+                st.error("⚠️ فشل الاتصال بكاميرا الويب الشخصية.")
+                break
+                
+            frame = cv2.flip(frame, 1) # قلب الصورة كالمرآة لسهولة استخدام يدك
+            frame_counter += 1
             
-            if len(self.sequence_buffers) > self.max_frames:
-                self.sequence_buffers.pop(0)
+            # تحويل الألوان وتجهيز الإطار (RGB)
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            
+            # ضبط الفارق الزمني: نأخذ لقطة للموديل كل 3 إطارات للحصول على دفق حركة متكامل وصحيح
+            if frame_counter % 3 == 0:
+                resized = cv2.resize(rgb_frame, target_size)
+                normalized_frame = resized / 255.0
+                sequence_buffers.append(normalized_frame)
                 
-            # استدعاء التنبؤ الفوري سحابياً عبر ONNX Runtime الخفيف
-            if len(self.sequence_buffers) == self.max_frames and ort_session is not None:
-                input_data = np.expand_dims(np.array(self.sequence_buffers, dtype=np.float32), axis=0)
-                outputs = ort_session.run(None, {self.input_name: input_data})
-                
-                predictions = np.squeeze(outputs)
-                predicted_class_idx = np.argmax(predictions)
-                confidence = predictions[predicted_class_idx]
-                
-                # عتبة الثقة المعتمدة سحابياً
-                if confidence > 0.55:
-                    try:
-                        detected_word = class_labels[predicted_class_idx]
-                        # حقن الكلمة المكتشفة في قائمة المتصفح لكي لا تختفي إطلاقاً
-                        if detected_word not in st.session_state.translated_sentence:
-                            st.session_state.translated_sentence.append(detected_word)
-                    except: pass
+                if len(sequence_buffers) > max_frames:
+                    sequence_buffers.pop(0)
+                    
+                # استدعاء التنبؤ الفوري عبر ONNX عند اكتمال الـ 5 إطارات المتباعدة زمنياً
+                if len(sequence_buffers) == max_frames:
+                    input_data = np.expand_dims(np.array(sequence_buffers, dtype=np.float32), axis=0)
+                    outputs = ort_session.run(None, {input_name: input_data})
+                    
+                    predictions = np.squeeze(outputs)
+                    predicted_class_idx = np.argmax(predictions)
+                    confidence = predictions[predicted_class_idx]
+                    
+                    # تحليل عتبة الثقة لاعتماد الكلمة
+                    if confidence > 0.55:
+                        try:
+                            detected_word = class_labels[predicted_class_idx]
+                            
+                            if detected_word == current_detected_word:
+                                stability_counter += 1
+                            else:
+                                current_detected_word = detected_word
+                                stability_counter = 0
+                            
+                            # آلية الاستقرار: إذا ثبتت يدك على الحركة لثوانٍ تُضاف الجملة فوراً
+                            if stability_counter >= 2 and detected_word != last_added_word:
+                                st.session_state.translated_sentence.append(detected_word)
+                                last_added_word = detected_word
+                                stability_counter = 0
+                                update_sentence_display()
+                        except: pass
 
-        # إعادة الإطار المعالج للبث المباشر عبر مكتبة PyAV السحابية سريعة التدفق
-        return av.VideoFrame.from_ndarray(img, format="bgr24")
-
-# 3. تشغيل ملقم البث المباشر المحدث والمقيد بخوادم STUN الرسمية لقوقل لضمان الاتصال السحابي
-if ort_session is not None:
-    processor = SignLanguageTransformer()
-    webrtc_streamer(
-        key="sign-language-translator-cloud",
-        video_frame_callback=processor.recv,
-        # خوادم الـ STUN ضرورية جداً سحابياً لتوصيل كاميرا اللابتوب بسيرفر لينكس عن بعد
-        rtc_configuration={"iceServers": [{"urls": ["stun:://google.com"]}]},
-        media_stream_constraints={
-            "video": {
-                "width": {"ideal": 640},
-                "height": {"ideal": 480},
-                "frameRate": {"ideal": 30}
-            },
-            "audio": False
-        }
-    )
+            # تحديث عرض الجملة التراكمية على الشاشة متزامناً مع البث
+            full_sentence_text = " ".join(st.session_state.translated_sentence)
+            if full_sentence_text:
+                sentence_placeholder.markdown(f"<h1 style='text-align: center; color: #FF4B4B; direction: rtl;'>{full_sentence_text}</h1>", unsafe_allow_html=True)
+            
+            # عرض البث الحي الطبيعي والصافي ليدك داخل متصفح الويب
+            frame_placeholder.image(rgb_frame, channels="RGB", use_container_width=True)
+            
+            time.sleep(0.01)
+            
+        cap.release()
