@@ -15,7 +15,7 @@ import queue
 
 # 1. إعداد واجهة المستخدم السحابية الاحترافية لمشروع التخرج
 st.set_page_config(page_title="Arabic Sign Language System", layout="centered")
-st.title("🤖 نظام الترجمة الفورية الحية لبناء جمل لغة الإشارة العربية (ArSL)")
+st.title("🤖 نظام الترجمة الفورية الحية لغة الإشارة العربية (ArSL)")
 st.write("الرابط السحابي نشط! أدِّ الحركات متتالية أمام الكاميرا لبناء جملة كاملة ومستمرة.")
 
 # تحميل موديل ONNX والأسماء من ملف الإكسل مرة واحدة لحفظ الذاكرة السحابية
@@ -91,6 +91,7 @@ class SignLanguageTransformer:
         self.current_detected_word = ""
         
         if ort_session is not None:
+            # قراءة الكشاف الصافي لاسم مدخلات الـ ONNX بدقة حادة وتفادي أخطاء الـ List
             inputs = ort_session.get_inputs()
             self.input_name = inputs[0].name if isinstance(inputs, list) else inputs.name
 
@@ -132,7 +133,7 @@ class SignLanguageTransformer:
                             self.current_detected_word = detected_word
                             self.stability_counter = 0
                         
-                        # قذف الكلمة في الطابور بدلاً من حقنها المباشر في الـ Session State لمنع أخطاء الخيوط
+                        # قذف الكلمة في الطابور لمنع الكراش
                         if self.stability_counter >= 3 and detected_word != self.last_added_word:
                             word_queue.put(detected_word)
                             self.last_added_word = detected_word
@@ -147,23 +148,18 @@ class SignLanguageTransformer:
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
-# 3. تشغيل ملقم البث السحابي المحدث بتثبيت بروتوكول البث النقي وتفادي كراش السيرفر
+# 3. تشغيل ملقم البث السحابي النقي والخالي من السيرفرات الخارجية المعطلة
 if ort_session is not None:
     webrtc_streamer(
-        key="sign-language-translator-cloud-final-v12", # تغيير الـ key لتطهير كاش المنصة حتماً وقراءة التحديث
+        key="sign-language-translator-cloud-final-v13", # 🔥 تم تغيير المفتاح لمسح الكاش كلياً وحذف سطر rtc_configuration
         mode=WebRtcMode.SENDRECV,
         video_frame_callback=SignLanguageTransformer().recv,
-        # 🟢 الضبط الجذري: نمرر عنوان السيرفر مع تقييد الـ ICE لمنع انهيار الخيوط الشبكية في السيرفرات السحابية
-        rtc_configuration={
-            "iceServers": [{"urls": ["stun:://google.com"]}],
-            "iceTransportPolicy": "all"
-        },
         media_stream_constraints={
             "video": True,
             "audio": False
         }
     )
 
-# سطر سحري إضافي لإجبار واجهة الويب على تحديث الشاشة فوراً عند وصول كلمة جديدة في الطابور
+# سطر إضافي لتحديث الشاشة فوراً عند وصول كلمة جديدة في الطابور
 if not word_queue.empty():
     st.rerun()
