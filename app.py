@@ -1,16 +1,17 @@
 import streamlit as st
 
-# حل مشكلة التوافقية وإجبار الواجهة على التحديث الفوري سحابياً
+# تأمين التحديث التلقائي للواجهة السحابية
 if not hasattr(st, "experimental_rerun"):
     st.experimental_rerun = st.rerun
 
-from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import webrtc_streamer, WebRtcMode
 import cv2
 import numpy as np
 import onnxruntime as ort
 import pandas as pd
 import os
 import av
+import queue
 
 # 1. إعداد واجهة المستخدم السحابية الاحترافية لمشروع التخرج
 st.set_page_config(page_title="Arabic Sign Language System", layout="centered")
@@ -38,32 +39,45 @@ def load_labels():
 ort_session = load_onnx_session()
 class_labels = load_labels()
 
-# تهيئة ذاكرة الجملة التراكمية السحابية لكي لا تختفي الكلمات نهائياً
+# تهيئة الذاكرة السحابية المستقرة للجملة
 if "translated_sentence" not in st.session_state:
     st.session_state.translated_sentence = []
+
+# 🔥 إنشاء خزان طابور آمن للخيوط لنقل الكلمات من الكاميرا للواجهة بدون كراش
+@st.cache_resource
+def get_word_queue():
+    return queue.Queue()
+
+word_queue = get_word_queue()
+
+# سحب الكلمات المكتشفة الجديدة من الطابور وحقنها في الجملة بالأعلى
+while not word_queue.empty():
+    new_word = word_queue.get()
+    if not st.session_state.translated_sentence or st.session_state.translated_sentence[-1] != new_word:
+        st.session_state.translated_sentence.append(new_word)
 
 # عرض الجملة الكبيرة المتسلسلة والمستمرة في المقدمة بشكل بارز
 st.markdown("---")
 st.markdown("### 📝 الجملة المترجمة الحالية (متسلسلة ومستمرة):")
 sentence_placeholder = st.empty()
 
-def refresh_sentence_ui():
-    full_sentence = " ".join(st.session_state.translated_sentence)
-    if full_sentence:
-        sentence_placeholder.markdown(f"<h1 style='text-align: center; color: #FF4B4B; direction: rtl;'>{full_sentence}</h1>", unsafe_allow_html=True)
-    else:
-        sentence_placeholder.markdown("<h3 style='text-align: center; color: #777;'>قف أمام الكاميرا وابدأ بالإشارة لبناء الجملة...</h3>", unsafe_allow_html=True)
-
-refresh_sentence_ui()
+full_sentence = " ".join(st.session_state.translated_sentence)
+if full_sentence:
+    sentence_placeholder.markdown(f"<h1 style='text-align: center; color: #FF4B4B; direction: rtl;'>{full_sentence}</h1>", unsafe_allow_html=True)
+else:
+    sentence_placeholder.markdown("<h3 style='text-align: center; color: #777;'>قف أمام الكاميرا وابدأ بالإشارة لبناء الجملة...</h3>", unsafe_allow_html=True)
 
 # زر مسح الجملة للبدء من جديد وتطهير الذاكرة السحابية فورا
 if st.button("🗑️ مسح الجملة والبدء من جديد", type="secondary"):
     st.session_state.translated_sentence = []
+    while not word_queue.empty():
+        try: word_queue.get_nowait()
+        except queue.Empty: break
     st.rerun()
 
 st.markdown("---")
 
-# 2. كلاس معالجة دفق الفيديو المباشر سحابياً وبناء الجمل التراكمية
+# 2. كلاس معالجة دفق الفيديو المباشر سحابياً وحقن الكلمات التراكمية
 class SignLanguageTransformer:
     def __init__(self):
         self.sequence_buffers = []
@@ -77,9 +91,8 @@ class SignLanguageTransformer:
         self.current_detected_word = ""
         
         if ort_session is not None:
-            # 🟢 الحل البرمجي الجذري لفك القائمة وسحب الاسم بأمان تام على خوادم لينكس
             inputs = ort_session.get_inputs()
-            self.input_name = inputs[0].name
+            self.input_name = inputs[0].name if isinstance(inputs, list) else inputs.name
 
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -106,7 +119,7 @@ class SignLanguageTransformer:
                 predicted_class_idx = np.argmax(predictions)
                 confidence = predictions[predicted_class_idx]
                 
-                # عتبة الثقة المعتمدة سحابياً لفلترة أي حركات عشوائية في الغرفة
+                # عتبة الثقة المعتمدة سحابياً لفلترة أي حركات عشوائية
                 if confidence > 0.55:
                     try:
                         detected_word = class_labels[predicted_class_idx]
@@ -119,10 +132,9 @@ class SignLanguageTransformer:
                             self.current_detected_word = detected_word
                             self.stability_counter = 0
                         
-                        # التحديث المستمر الآمن: حقن الكلمة مباشرة في قائمة السيرفر المفتوحة لمنع القفل الأمني للمتصفح
+                        # 🔥 الحل الحاسم: قذف الكلمة في الطابور بدلاً من حقنها المباشر في الـ Session State لمنع خطأ الـ AttributeError
                         if self.stability_counter >= 3 and detected_word != self.last_added_word:
-                            if detected_word not in st.session_state.translated_sentence:
-                                st.session_state.translated_sentence.append(detected_word)
+                            word_queue.put(detected_word)
                             self.last_added_word = detected_word
                             self.stability_counter = 0
                     except:
@@ -137,12 +149,16 @@ class SignLanguageTransformer:
 
 # 3. تشغيل ملقم البث السحابي المحدث بكود كشاف مسح الكاش الصارم
 if ort_session is not None:
-    processor = SignLanguageTransformer()
     webrtc_streamer(
-        key="sign-language-translator-cloud-final-v10", # تغيير الـ key لتطهير كاش المنصة حتماً وقراءة التحديث
-        video_frame_callback=processor.recv,
+        key="sign-language-translator-cloud-final-v11", # تغيير الـ key لتطهير كاش المنصة حتماً وقراءة التحديث
+        mode=WebRtcMode.SENDRECV,
+        video_frame_callback=SignLanguageTransformer().recv,
         media_stream_constraints={
             "video": True,
             "audio": False
         }
     )
+
+# سطر سحري إضافي لإجبار واجهة الويب على تحديث الشاشة فوراً عند وصول كلمة جديدة في الطابور
+if not word_queue.empty():
+    st.rerun()
