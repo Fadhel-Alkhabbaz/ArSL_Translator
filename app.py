@@ -74,12 +74,10 @@ class SignLanguageTransformer:
             self.input_name = ort_session.get_inputs()[0].name
 
     def recv(self, frame):
-        # سحب الإطار الحالي كمصفوفة NumPy مباشرة من بث متصفح المستخدم
         img = frame.to_ndarray(format="bgr24")
         img = cv2.flip(img, 1) # قلب الصورة كالمرآة لراحة المستخدم
         self.frame_counter += 1
         
-        # تحويل الألوان وتجهيز الإطار (RGB) المتطابق مع أوزان الموديل
         rgb_frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         
         # المؤقت الحركي المتباعد: نأخذ لقطة كل 3 إطارات لتأمين الحركة كاملة للـ GRU
@@ -100,25 +98,22 @@ class SignLanguageTransformer:
                 predicted_class_idx = np.argmax(predictions)
                 confidence = predictions[predicted_class_idx]
                 
-                # عتبة الثقة المعتمدة سحابياً
-                if confidence > 0.55:
+                # عتبة الثقة المعتمدة سحابياً لفلترة الحركات العشوائية
+                if confidence > 0.60:
                     try:
                         detected_word = class_labels[predicted_class_idx]
-                        # حقن الكلمة المكتشفة في قائمة المتصفح لكي لا تختفي إطلاقاً
-                        if detected_word not in st.session_state.translated_sentence:
+                        if not st.session_state.translated_sentence or st.session_state.translated_sentence[-1] != detected_word:
                             st.session_state.translated_sentence.append(detected_word)
                     except: pass
 
-        # إعادة الإطار المعالج للبث المباشر عبر مكتبة PyAV السحابية سريعة التدفق
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
-# 3. تشغيل ملقم البث المباشر المحدث والمقيد بخوادم STUN الرسمية لقوقل لضمان الاتصال السحابي
+# 3. تشغيل ملقم البث المباشر المحدث والمقيد بخوادم STUN المحدثة من قوقل
 if ort_session is not None:
     processor = SignLanguageTransformer()
     webrtc_streamer(
-        key="sign-language-translator-cloud",
+        key="sign-language-translator-cloud-v2",
         video_frame_callback=processor.recv,
-        # خوادم الـ STUN ضرورية جداً سحابياً لتوصيل كاميرا اللابتوب بسيرفر لينكس عن بعد
         rtc_configuration={"iceServers": [{"urls": ["stun:://google.com"]}]},
         media_stream_constraints={
             "video": {
