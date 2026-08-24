@@ -1,5 +1,6 @@
 import streamlit as st
 
+# حل مشكلة التوافقية وإجبار الواجهة على التحديث الفوري سحابياً
 if not hasattr(st, "experimental_rerun"):
     st.experimental_rerun = st.rerun
 
@@ -13,10 +14,10 @@ import av
 
 # 1. إعداد واجهة المستخدم السحابية الاحترافية لمشروع التخرج
 st.set_page_config(page_title="Arabic Sign Language System", layout="centered")
-st.title("🤖 نظام الترجمة الفورية الحية للغة الإشارة العربية (ArSL)")
-st.write("الرابط السحابي نشط! الترجمة الفورية تظهر الآن مباشرة مكتوبة فوق شاشة الفيديو لايف.")
+st.title("🤖 نظام الترجمة الفورية الحية لبناء جمل لغة الإشارة العربية (ArSL)")
+st.write("الرابط السحابي نشط! أدِّ الحركات متتالية أمام الكاميرا لبناء جملة كاملة ومستمرة.")
 
-# تحميل موديل ONNX والأسماء من ملف الإكسل مرة واحدة لحفظ الذاكرة
+# تحميل موديل ONNX والأسماء من ملف الإكسل مرة واحدة لحفظ الذاكرة السحابية
 @st.cache_resource
 def load_onnx_session():
     model_path = "arabic_sign_model.onnx"
@@ -37,27 +38,57 @@ def load_labels():
 ort_session = load_onnx_session()
 class_labels = load_labels()
 
-# 2. كلاس معالجة دفق الفيديو المباشر فائق السرعة
+# تهيئة وإدارة ذاكرة الجملة التراكمية السحابية لكي لا تختفي الكلمات نهائياً عند التحديث
+if "translated_sentence" not in st.session_state:
+    st.session_state.translated_sentence = []
+
+# عرض الجملة الكبيرة المتسلسلة والمستمرة في المقدمة بشكل بارز
+st.markdown("---")
+st.markdown("### 📝 الجملة المترجمة الحالية (متسلسلة ومستمرة):")
+sentence_placeholder = st.empty()
+
+def refresh_sentence_ui():
+    full_sentence = " ".join(st.session_state.translated_sentence)
+    if full_sentence:
+        sentence_placeholder.markdown(f"<h1 style='text-align: center; color: #FF4B4B; direction: rtl;'>{full_sentence}</h1>", unsafe_allow_html=True)
+    else:
+        sentence_placeholder.markdown("<h3 style='text-align: center; color: #777;'>قف أمام الكاميرا وابدأ بالإشارة لبناء الجملة...</h3>", unsafe_allow_html=True)
+
+refresh_sentence_ui()
+
+# زر مسح الجملة للبدء من جديد وتطهير الذاكرة السحابية فورا
+if st.button("🗑️ مسح الجملة والبدء من جديد", type="secondary"):
+    st.session_state.translated_sentence = []
+    st.rerun()
+
+st.markdown("---")
+
+# 2. كلاس معالجة دفق الفيديو المباشر سحابياً وبناء الجمل التراكمية
 class SignLanguageTransformer:
     def __init__(self):
         self.sequence_buffers = []
         self.max_frames = 5
         self.target_size = (64, 64)
         self.frame_counter = 0
-        self.display_text = "Scanning..." # النص الافتراضي على الشاشة
+        self.live_word = "Scanning..." # التوقع اللحظي على شاشة الكاميرا
+        
+        # متغيرات ضبط استقرار ومطابقة الجمل المتسلسلة ومنع التكرار العشوائي
+        self.last_added_word = ""
+        self.stability_counter = 0
+        self.current_detected_word = ""
+        
         if ort_session is not None:
-            # 🟢 الضبط البرمجي السحري والجذري: قراءة اسم المدخلات بشكل ديناميكي مرن يتوافق مع أي إصدار
             inputs = ort_session.get_inputs()
             self.input_name = inputs[0].name if isinstance(inputs, list) else inputs.name
 
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
-        img = cv2.flip(img, 1) # قلب الصورة كالمرآة لسهولة الاستخدام
+        img = cv2.flip(img, 1) # قلب الصورة كالمرآة لسهولة استخدام اليدين
         self.frame_counter += 1
         
         rgb_frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         
-        # أخذ لقطة كل إطارين لتسريع المعالجة السحابية وتقليل الـ Lag
+        # أخذ لقطة كل إطارين لتسريع الأداء السحابي ومنع الـ Lag تماماً
         if self.frame_counter % 2 == 0:
             resized = cv2.resize(rgb_frame, self.target_size)
             normalized_frame = resized / 255.0
@@ -66,7 +97,7 @@ class SignLanguageTransformer:
             if len(self.sequence_buffers) > self.max_frames:
                 self.sequence_buffers.pop(0)
                 
-            # تشغيل التنبؤ الفوري عبر ONNX
+            # تشغيل التنبؤ الفوري والمستقر عبر ONNX
             if len(self.sequence_buffers) == self.max_frames and ort_session is not None:
                 input_data = np.expand_dims(np.array(self.sequence_buffers, dtype=np.float32), axis=0)
                 outputs = ort_session.run(None, {self.input_name: input_data})
@@ -75,25 +106,40 @@ class SignLanguageTransformer:
                 predicted_class_idx = np.argmax(predictions)
                 confidence = predictions[predicted_class_idx]
                 
-                # إذا تخطت نسبة الثقة 50% نقوم بتحديث النص المكتوب فوراً
-                if confidence > 0.50:
+                # عتبة الثقة المعتمدة سحابياً لفلترة أي حركات عشوائية في الغرفة
+                if confidence > 0.55:
                     try:
-                        self.display_text = f"Sign: {class_labels[predicted_class_idx]}"
+                        # جلب الكلمة العربية الصائبة مباشرة من ملف الإكسل
+                        detected_word = class_labels[predicted_class_idx]
+                        self.live_word = f"Sign: {detected_word} ({confidence*100:.0f}%)"
+                        
+                        # آلية تجميع الجمل التراكمية المتسلسلة: يجب ثبات اليد لـ 3 لقطات متتالية للتأكيد
+                        if detected_word == self.current_detected_word:
+                            self.stability_counter += 1
+                        else:
+                            self.current_detected_word = detected_word
+                            self.stability_counter = 0
+                        
+                        # إذا ثبتت الحركة ولم تكن هي نفس آخر كلمة مضافة، تُقذف في الجملة التراكمية الكبيرة
+                        if self.stability_counter >= 3 and detected_word != self.last_added_word:
+                            st.session_state.translated_sentence.append(detected_word)
+                            self.last_added_word = detected_word
+                            self.stability_counter = 0
                     except:
-                        self.display_text = f"Sign ID: {predicted_class_idx + 1}"
+                        self.live_word = f"Sign ID: {predicted_class_idx + 1}"
                 else:
-                    self.display_text = "Scanning..."
+                    self.live_word = "Scanning..."
 
-        # كتابة الكلمة المترجمة مباشرة فوق فيديو المستخدم لايف وبشكل فوري باللون الأخضر
-        cv2.putText(img, self.display_text, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2, cv2.LINE_AA)
+        # كتابة الكلمة اللحظية المكتشفة مباشرة فوق بث الكاميرا لايف باللون الأخضر الواضح
+        cv2.putText(img, self.live_word, (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2, cv2.LINE_AA)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
-# 3. تشغيل ملقم البث السحابي
+# 3. تشغيل ملقم البث السحابي المحدث
 if ort_session is not None:
     processor = SignLanguageTransformer()
     webrtc_streamer(
-        key="sign-language-translator-cloud-final-v6", # تم تغيير الـ key لإجبار المنصة على مسح الكاش فوراً
+        key="sign-language-translator-cloud-final-v7", # تغيير الـ key لتطهير كاش المنصة حتماً
         video_frame_callback=processor.recv,
         media_stream_constraints={
             "video": True,
