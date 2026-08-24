@@ -38,7 +38,7 @@ def load_labels():
 ort_session = load_onnx_session()
 class_labels = load_labels()
 
-# تهيئة وإدارة ذاكرة الجملة التراكمية السحابية (نضيف متغير وسيط لتزامن الـ Thread)
+# تهيئة وإدارة ذاكرة الجملة التراكمية السحابية
 if "translated_sentence" not in st.session_state:
     st.session_state.translated_sentence = []
 if "new_word_trigger" not in st.session_state:
@@ -86,7 +86,11 @@ class SignLanguageTransformer:
         
         if ort_session is not None:
             inputs = ort_session.get_inputs()
-            self.input_name = inputs.name if isinstance(inputs, list) else inputs.name
+            # 🔥 تصحيح فحص الكشاف الحاسم: قراءة أول عنصر بقفل [0] إذا كانت المخرجات قائمة لقراءة الاسم بنجاح
+            if isinstance(inputs, list):
+                self.input_name = inputs[0].name
+            else:
+                self.input_name = inputs.name
 
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -145,7 +149,7 @@ class SignLanguageTransformer:
 if ort_session is not None:
     processor = SignLanguageTransformer()
     webrtc_streamer(
-        key="sign-language-translator-cloud-final-v8", # تغيير الـ key لتطهير كاش المنصة حتماً وقراءة التحديث
+        key="sign-language-translator-cloud-final-v9", # تغيير الـ key لتطهير كاش المنصة حتماً وقراءة التحديث
         video_frame_callback=processor.recv,
         media_stream_constraints={
             "video": True,
