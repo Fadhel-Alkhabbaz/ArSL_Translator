@@ -1,6 +1,6 @@
 import streamlit as st
 
-# تأمين كود إعادة التنشيط للتطابق التام مع خوادم لينكس السحابية لـ Streamlit
+# حل مشكلة التوافقية وإجبار الواجهة على التحديث الفوري سحابياً
 if not hasattr(st, "experimental_rerun"):
     st.experimental_rerun = st.rerun
 
@@ -38,40 +38,32 @@ def load_labels():
 ort_session = load_onnx_session()
 class_labels = load_labels()
 
-# تهيئة وإدارة ذاكرة الجملة التراكمية السحابية
+# تهيئة ذاكرة الجملة التراكمية السحابية لكي لا تختفي الكلمات نهائياً
 if "translated_sentence" not in st.session_state:
     st.session_state.translated_sentence = []
-if "new_word_trigger" not in st.session_state:
-    st.session_state.new_word_trigger = ""
-
-# آلية حتمية لتحديث الكلمات المتراكمة بالأعلى فور حقنها من ملقم الفيديو
-if st.session_state.new_word_trigger:
-    word_to_add = st.session_state.new_word_trigger
-    # منع التكرار العشوائي لنفس الكلمة متتالية وراء بعضها بشكل حاد
-    if not st.session_state.translated_sentence or st.session_state.translated_sentence[-1] != word_to_add:
-        st.session_state.translated_sentence.append(word_to_add)
-    st.session_state.new_word_trigger = "" # تصفير المؤشر فوراً
 
 # عرض الجملة الكبيرة المتسلسلة والمستمرة في المقدمة بشكل بارز
 st.markdown("---")
 st.markdown("### 📝 الجملة المترجمة الحالية (متسلسلة ومستمرة):")
 sentence_placeholder = st.empty()
 
-full_sentence = " ".join(st.session_state.translated_sentence)
-if full_sentence:
-    sentence_placeholder.markdown(f"<h1 style='text-align: center; color: #FF4B4B; direction: rtl;'>{full_sentence}</h1>", unsafe_allow_html=True)
-else:
-    sentence_placeholder.markdown("<h3 style='text-align: center; color: #777;'>...قف أمام الكاميرا وابدأ بالإشارة لبناء الجملة</h3>", unsafe_allow_html=True)
+def refresh_sentence_ui():
+    full_sentence = " ".join(st.session_state.translated_sentence)
+    if full_sentence:
+        sentence_placeholder.markdown(f"<h1 style='text-align: center; color: #FF4B4B; direction: rtl;'>{full_sentence}</h1>", unsafe_allow_html=True)
+    else:
+        sentence_placeholder.markdown("<h3 style='text-align: center; color: #777;'>قف أمام الكاميرا وابدأ بالإشارة لبناء الجملة...</h3>", unsafe_allow_html=True)
+
+refresh_sentence_ui()
 
 # زر مسح الجملة للبدء من جديد وتطهير الذاكرة السحابية فورا
 if st.button("🗑️ مسح الجملة والبدء من جديد", type="secondary"):
     st.session_state.translated_sentence = []
-    st.session_state.new_word_trigger = ""
     st.rerun()
 
 st.markdown("---")
 
-# 2. كلاس معالجة دفق الفيديو المباشر سحابياً وحقن الكلمات التراكمية
+# 2. كلاس معالجة دفق الفيديو المباشر سحابياً وبناء الجمل التراكمية
 class SignLanguageTransformer:
     def __init__(self):
         self.sequence_buffers = []
@@ -85,12 +77,9 @@ class SignLanguageTransformer:
         self.current_detected_word = ""
         
         if ort_session is not None:
+            # 🟢 الحل البرمجي الجذري لفك القائمة وسحب الاسم بأمان تام على خوادم لينكس
             inputs = ort_session.get_inputs()
-            # 🔥 تصحيح فحص الكشاف الحاسم: قراءة أول عنصر بقفل [0] إذا كانت المخرجات قائمة لقراءة الاسم بنجاح
-            if isinstance(inputs, list):
-                self.input_name = inputs[0].name
-            else:
-                self.input_name = inputs.name
+            self.input_name = inputs[0].name
 
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
@@ -117,22 +106,23 @@ class SignLanguageTransformer:
                 predicted_class_idx = np.argmax(predictions)
                 confidence = predictions[predicted_class_idx]
                 
-                # عتبة الثقة المعتمدة سحابياً لفلترة أي حركات عشوائية
+                # عتبة الثقة المعتمدة سحابياً لفلترة أي حركات عشوائية في الغرفة
                 if confidence > 0.55:
                     try:
                         detected_word = class_labels[predicted_class_idx]
                         self.live_word = f"Sign: {detected_word} ({confidence*100:.0f}%)"
                         
-                        # آلية تجميع الجمل التراكمية المتسلسلة: يجب ثبات اليد لـ 3 لقطات متتالية للتأكيد
+                        # آلية تجميع الجمل المتسلسلة: يجب ثبات اليد لـ 3 لقطات متتالية للتأكيد
                         if detected_word == self.current_detected_word:
                             self.stability_counter += 1
                         else:
                             self.current_detected_word = detected_word
                             self.stability_counter = 0
                         
-                        # إذا ثبتت الحركة، نقوم بقذفها في الذاكرة التراكمية المشتركة للواجهة
+                        # التحديث المستمر الآمن: حقن الكلمة مباشرة في قائمة السيرفر المفتوحة لمنع القفل الأمني للمتصفح
                         if self.stability_counter >= 3 and detected_word != self.last_added_word:
-                            st.session_state.new_word_trigger = detected_word
+                            if detected_word not in st.session_state.translated_sentence:
+                                st.session_state.translated_sentence.append(detected_word)
                             self.last_added_word = detected_word
                             self.stability_counter = 0
                     except:
@@ -149,7 +139,7 @@ class SignLanguageTransformer:
 if ort_session is not None:
     processor = SignLanguageTransformer()
     webrtc_streamer(
-        key="sign-language-translator-cloud-final-v9", # تغيير الـ key لتطهير كاش المنصة حتماً وقراءة التحديث
+        key="sign-language-translator-cloud-final-v10", # تغيير الـ key لتطهير كاش المنصة حتماً وقراءة التحديث
         video_frame_callback=processor.recv,
         media_stream_constraints={
             "video": True,
