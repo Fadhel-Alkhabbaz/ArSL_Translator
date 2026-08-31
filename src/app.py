@@ -50,21 +50,41 @@ MAX_SEGMENT_FRAMES = 90
 IDLE_FRAMES_TO_CLOSE = 8
 DISPLAY_LANG_LABEL = "arabic"
 
-@st.cache_data(ttl=3000)  # صلاحية رمز Twilio عادة ساعة — نجدّده كل 50 دقيقة احتياطيًا
+@st.cache_data(ttl=3000)
 def get_ice_servers():
-    """يجلب قائمة خوادم STUN/TURN مباشرة من Twilio (مستقرة وموثوقة)، مع بديل
-    احتياطي (STUN فقط من جوجل) إذا لم تكن بيانات Twilio متوفرة في secrets —
-    يسمح هذا للتطبيق بالعمل محليًا أو أثناء التطوير بدون حساب Twilio."""
-    account_sid = st.secrets.get("TWILIO_ACCOUNT_SID")
-    auth_token = st.secrets.get("TWILIO_AUTH_TOKEN")
+    """يجلب قائمة خوادم STUN/TURN من Metered.ca (حساب مجاني، 500MB/شهر بدون
+    بطاقة بنكية)، مع بديل احتياطي (STUN فقط من جوجل) إذا لم تكن بيانات
+    Metered متوفرة في secrets — يسمح هذا للتطبيق بالعمل محليًا بدون حساب."""
+    metered_domain = st.secrets.get("METERED_DOMAIN")     # مثال: your-app-name.metered.live
+    metered_username = st.secrets.get("METERED_USERNAME")
+    metered_credential = st.secrets.get("METERED_CREDENTIAL")
 
-    if not account_sid or not auth_token:
+    if not metered_domain or not metered_username or not metered_credential:
         return [{"urls": ["stun:stun.l.google.com:19302"]}]
 
-    from twilio.rest import Client
-    client = Client(account_sid, auth_token)
-    token = client.tokens.create()
-    return token.ice_servers
+    return [
+        {"urls": [f"stun:stun.relay.metered.ca:80"]},
+        {
+            "urls": [f"turn:{metered_domain}:80"],
+            "username": metered_username,
+            "credential": metered_credential,
+        },
+        {
+            "urls": [f"turn:{metered_domain}:80?transport=tcp"],
+            "username": metered_username,
+            "credential": metered_credential,
+        },
+        {
+            "urls": [f"turn:{metered_domain}:443"],
+            "username": metered_username,
+            "credential": metered_credential,
+        },
+        {
+            "urls": [f"turns:{metered_domain}:443?transport=tcp"],
+            "username": metered_username,
+            "credential": metered_credential,
+        },
+    ]
 
 
 RTC_CONFIGURATION = RTCConfiguration({"iceServers": get_ice_servers()})
