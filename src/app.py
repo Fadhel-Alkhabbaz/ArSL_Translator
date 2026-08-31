@@ -50,7 +50,23 @@ MAX_SEGMENT_FRAMES = 90
 IDLE_FRAMES_TO_CLOSE = 8
 DISPLAY_LANG_LABEL = "arabic"
 
-RTC_CONFIGURATION = RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
+RTC_CONFIGURATION = RTCConfiguration({
+    "iceServers": [
+        {"urls": ["stun:stun.l.google.com:19302"]},
+        # خادم TURN مجاني (Open Relay Project) — ضروري لإتمام الاتصال عبر شبكات
+        # كثيرة لا يكفيها STUN وحده، خصوصًا على استضافة سحابية مثل Streamlit Cloud.
+        {
+            "urls": ["turn:openrelay.metered.ca:80"],
+            "username": "openrelayproject",
+            "credential": "openrelayproject",
+        },
+        {
+            "urls": ["turn:openrelay.metered.ca:443"],
+            "username": "openrelayproject",
+            "credential": "openrelayproject",
+        },
+    ]
+})
 
 
 # ============================================================
