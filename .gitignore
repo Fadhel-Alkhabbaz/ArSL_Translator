@@ -1,0 +1,22 @@
+# بيئة بايثون
+arsl_env/
+__pycache__/
+*.pyc
+
+# أسرار (لا يجب رفعها إطلاقًا)
+.streamlit/secrets.toml
+
+# بيانات ونماذج كبيرة الحجم (لا تُرفع لـ GitHub)
+data/raw/
+data/processed/
+*.pth
+*.task
+processed_landmarks_custom.zip
+processed_landmarks_custom/
+
+# ملفات نظام التشغيل
+.DS_Store
+Thumbs.db
+
+# ملفات Jupyter المؤقتة
+.ipynb_checkpoints/

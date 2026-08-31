@@ -1,0 +1,2010 @@
+{
+  "0001": {
+    "arabic": "0",
+    "english": "0"
+  },
+  "0002": {
+    "arabic": "1",
+    "english": "1"
+  },
+  "0003": {
+    "arabic": "2",
+    "english": "2"
+  },
+  "0004": {
+    "arabic": "3",
+    "english": "3"
+  },
+  "0005": {
+    "arabic": "4",
+    "english": "4"
+  },
+  "0006": {
+    "arabic": "5",
+    "english": "5"
+  },
+  "0007": {
+    "arabic": "6",
+    "english": "6"
+  },
+  "0008": {
+    "arabic": "7",
+    "english": "7"
+  },
+  "0009": {
+    "arabic": "8",
+    "english": "8"
+  },
+  "0010": {
+    "arabic": "9",
+    "english": "9"
+  },
+  "0011": {
+    "arabic": "10",
+    "english": "10"
+  },
+  "0012": {
+    "arabic": "20",
+    "english": "20"
+  },
+  "0013": {
+    "arabic": "30",
+    "english": "30"
+  },
+  "0014": {
+    "arabic": "40",
+    "english": "40"
+  },
+  "0015": {
+    "arabic": "50",
+    "english": "50"
+  },
+  "0016": {
+    "arabic": "60",
+    "english": "60"
+  },
+  "0017": {
+    "arabic": "70",
+    "english": "70"
+  },
+  "0018": {
+    "arabic": "80",
+    "english": "80"
+  },
+  "0019": {
+    "arabic": "90",
+    "english": "90"
+  },
+  "0020": {
+    "arabic": "100",
+    "english": "100"
+  },
+  "0021": {
+    "arabic": "200",
+    "english": "200"
+  },
+  "0022": {
+    "arabic": "300",
+    "english": "300"
+  },
+  "0023": {
+    "arabic": "400",
+    "english": "400"
+  },
+  "0024": {
+    "arabic": "500",
+    "english": "500"
+  },
+  "0025": {
+    "arabic": "600",
+    "english": "600"
+  },
+  "0026": {
+    "arabic": "700",
+    "english": "700"
+  },
+  "0027": {
+    "arabic": "800",
+    "english": "800"
+  },
+  "0028": {
+    "arabic": "900",
+    "english": "900"
+  },
+  "0029": {
+    "arabic": "1000",
+    "english": "1000"
+  },
+  "0030": {
+    "arabic": "1000000",
+    "english": "1000000"
+  },
+  "0031": {
+    "arabic": "10000000",
+    "english": "10000000"
+  },
+  "0032": {
+    "arabic": "ا",
+    "english": "alif"
+  },
+  "0033": {
+    "arabic": "ب",
+    "english": "baa"
+  },
+  "0034": {
+    "arabic": "ت",
+    "english": "ta"
+  },
+  "0035": {
+    "arabic": "ث",
+    "english": "tha"
+  },
+  "0036": {
+    "arabic": "ج",
+    "english": "Jiim"
+  },
+  "0037": {
+    "arabic": "ح",
+    "english": "Haa"
+  },
+  "0038": {
+    "arabic": "خ",
+    "english": "kha"
+  },
+  "0039": {
+    "arabic": "د",
+    "english": "daal"
+  },
+  "0040": {
+    "arabic": "ذ",
+    "english": "thal"
+  },
+  "0041": {
+    "arabic": "ر",
+    "english": "raa"
+  },
+  "0042": {
+    "arabic": "ز",
+    "english": "zay"
+  },
+  "0043": {
+    "arabic": "س",
+    "english": "siin"
+  },
+  "0044": {
+    "arabic": "ش",
+    "english": "shiin"
+  },
+  "0045": {
+    "arabic": "ص",
+    "english": "Saad"
+  },
+  "0046": {
+    "arabic": "ض",
+    "english": "Daad"
+  },
+  "0047": {
+    "arabic": "ط",
+    "english": "Taa"
+  },
+  "0048": {
+    "arabic": "ظ",
+    "english": "Zaa"
+  },
+  "0049": {
+    "arabic": "ع",
+    "english": "Ayn"
+  },
+  "0050": {
+    "arabic": "غ",
+    "english": "ghayn"
+  },
+  "0051": {
+    "arabic": "ف",
+    "english": "faa"
+  },
+  "0052": {
+    "arabic": "ق",
+    "english": "qaaf"
+  },
+  "0053": {
+    "arabic": "ك",
+    "english": "kaaf"
+  },
+  "0054": {
+    "arabic": "ل",
+    "english": "laam"
+  },
+  "0055": {
+    "arabic": "م",
+    "english": "miim"
+  },
+  "0056": {
+    "arabic": "ن",
+    "english": "noon"
+  },
+  "0057": {
+    "arabic": "ه",
+    "english": "haa"
+  },
+  "0058": {
+    "arabic": "و",
+    "english": "waaw"
+  },
+  "0059": {
+    "arabic": "ي",
+    "english": "yaa"
+  },
+  "0060": {
+    "arabic": "ة",
+    "english": "taa marbuuTa"
+  },
+  "0061": {
+    "arabic": "أ",
+    "english": "alif with hamza above"
+  },
+  "0062": {
+    "arabic": "ؤ",
+    "english": "Waaw with hamza"
+  },
+  "0063": {
+    "arabic": "ئ",
+    "english": "Alif maqsoura with hamza"
+  },
+  "0064": {
+    "arabic": "ئـ",
+    "english": "hamza on line"
+  },
+  "0065": {
+    "arabic": "ء",
+    "english": "hamza"
+  },
+  "0066": {
+    "arabic": "إ",
+    "english": "alif with hamza below"
+  },
+  "0067": {
+    "arabic": "آ",
+    "english": "ALif with maad"
+  },
+  "0068": {
+    "arabic": "ى",
+    "english": "Alif maqsoura"
+  },
+  "0069": {
+    "arabic": "لا",
+    "english": "laam Alif"
+  },
+  "0070": {
+    "arabic": "ال",
+    "english": "Al"
+  },
+  "0071": {
+    "arabic": "هيكل عظمي",
+    "english": "Skeleton"
+  },
+  "0072": {
+    "arabic": "جمجة",
+    "english": "skull"
+  },
+  "0073": {
+    "arabic": "عمود فقري",
+    "english": "Backbone"
+  },
+  "0074": {
+    "arabic": "قفص صدري",
+    "english": "Chest"
+  },
+  "0075": {
+    "arabic": "جهاز تنفسي",
+    "english": "Respiratory device"
+  },
+  "0076": {
+    "arabic": "قصبة هوائية",
+    "english": "Trachea"
+  },
+  "0077": {
+    "arabic": "رئتان",
+    "english": "lungs"
+  },
+  "0078": {
+    "arabic": "شهيق - زفير",
+    "english": "Ins and Outs"
+  },
+  "0079": {
+    "arabic": "جهاز هضمي",
+    "english": "digestive system"
+  },
+  "0080": {
+    "arabic": "وجه",
+    "english": "Face"
+  },
+  "0081": {
+    "arabic": "بلعوم",
+    "english": "pharynx"
+  },
+  "0082": {
+    "arabic": "كبد",
+    "english": "liver"
+  },
+  "0083": {
+    "arabic": "البنكرياس",
+    "english": "pancreas"
+  },
+  "0084": {
+    "arabic": "الأمعاء الدقيقة",
+    "english": "Small intestine"
+  },
+  "0085": {
+    "arabic": "الأمعاء الغليظة",
+    "english": "Large intestine"
+  },
+  "0086": {
+    "arabic": "الزائدة الدودية",
+    "english": "Appendix"
+  },
+  "0087": {
+    "arabic": "جهاز عصبي",
+    "english": "nervous system"
+  },
+  "0088": {
+    "arabic": "قلب",
+    "english": "heart"
+  },
+  "0089": {
+    "arabic": "حواس خمس",
+    "english": "five senses"
+  },
+  "0090": {
+    "arabic": "عضلة",
+    "english": "muscle"
+  },
+  "0091": {
+    "arabic": "أنسجة",
+    "english": "tissue"
+  },
+  "0092": {
+    "arabic": "مستشفى",
+    "english": "hospital"
+  },
+  "0093": {
+    "arabic": "إسعافات أولية",
+    "english": "first aid"
+  },
+  "0094": {
+    "arabic": "جرح نازف",
+    "english": "wound"
+  },
+  "0095": {
+    "arabic": "حروق",
+    "english": "burning"
+  },
+  "0096": {
+    "arabic": "مخدر/ بنج",
+    "english": "anesthetist"
+  },
+  "0097": {
+    "arabic": "عملية جراحية",
+    "english": "surgery"
+  },
+  "0098": {
+    "arabic": "شاش / ضمادة",
+    "english": "gauze"
+  },
+  "0099": {
+    "arabic": "شريط لاصق / بلاستر",
+    "english": "adhesive tape"
+  },
+  "0100": {
+    "arabic": "صيدلية",
+    "english": "pharmacy"
+  },
+  "0101": {
+    "arabic": "تحليل دم",
+    "english": "blood analysis"
+  },
+  "0102": {
+    "arabic": "فحص سريري",
+    "english": "physical examination"
+  },
+  "0103": {
+    "arabic": "فحص النظر",
+    "english": "sight examination"
+  },
+  "0104": {
+    "arabic": "ميزان حرارة",
+    "english": "thermometer"
+  },
+  "0105": {
+    "arabic": "سماعة أذن",
+    "english": "stethoscope"
+  },
+  "0106": {
+    "arabic": "جهاز قياس الضغط",
+    "english": "sphygmometroscope"
+  },
+  "0107": {
+    "arabic": "نبض القلب",
+    "english": "pulse"
+  },
+  "0108": {
+    "arabic": "تحليل طبي",
+    "english": "analysis"
+  },
+  "0109": {
+    "arabic": "معمل التحاليل / مختبر",
+    "english": "analysis laboratory"
+  },
+  "0110": {
+    "arabic": "صورة اشعة",
+    "english": "ray photo"
+  },
+  "0111": {
+    "arabic": "التهاب",
+    "english": "inflammation"
+  },
+  "0112": {
+    "arabic": "تورم",
+    "english": "swelling"
+  },
+  "0113": {
+    "arabic": "زكام",
+    "english": "cold"
+  },
+  "0114": {
+    "arabic": "عدوى",
+    "english": "infection"
+  },
+  "0115": {
+    "arabic": "صداع",
+    "english": "headache"
+  },
+  "0116": {
+    "arabic": "ألم",
+    "english": "pain"
+  },
+  "0117": {
+    "arabic": "حمى",
+    "english": "fever"
+  },
+  "0118": {
+    "arabic": "إسهال",
+    "english": "diarrhea"
+  },
+  "0119": {
+    "arabic": "إمساك",
+    "english": "constipation"
+  },
+  "0120": {
+    "arabic": "مغص",
+    "english": "colic"
+  },
+  "0121": {
+    "arabic": "مرض السكر / سكري",
+    "english": "diabetes"
+  },
+  "0122": {
+    "arabic": "أزمة قلبية",
+    "english": "heart attack"
+  },
+  "0123": {
+    "arabic": "سرطان",
+    "english": "cancer"
+  },
+  "0124": {
+    "arabic": "مرض فقدان المناعة / الإيدز",
+    "english": "Aids"
+  },
+  "0125": {
+    "arabic": "تساقط الشعر",
+    "english": "Loss of hair"
+  },
+  "0126": {
+    "arabic": "سكتة قلبية",
+    "english": "Heart failure"
+  },
+  "0127": {
+    "arabic": "شلل نصفي",
+    "english": "hemiplegia"
+  },
+  "0128": {
+    "arabic": "شلل دماغي",
+    "english": "Cerebral paralysis"
+  },
+  "0129": {
+    "arabic": "ضغط الدم",
+    "english": "blood pressure"
+  },
+  "0130": {
+    "arabic": "حساسية",
+    "english": "allergy"
+  },
+  "0131": {
+    "arabic": "حكة / هرش",
+    "english": "itch"
+  },
+  "0132": {
+    "arabic": "دواء",
+    "english": "medicine"
+  },
+  "0133": {
+    "arabic": "دورة شهرية",
+    "english": "monthly circulation"
+  },
+  "0134": {
+    "arabic": "مريض / مرض",
+    "english": "sick"
+  },
+  "0135": {
+    "arabic": "كبسولة",
+    "english": "capsule"
+  },
+  "0136": {
+    "arabic": "دواء شراب",
+    "english": "liquid medicine"
+  },
+  "0137": {
+    "arabic": "مرهم",
+    "english": "ointment"
+  },
+  "0138": {
+    "arabic": "قطارة",
+    "english": "dropper"
+  },
+  "0139": {
+    "arabic": "أخذ إبرة",
+    "english": "acupuncture"
+  },
+  "0140": {
+    "arabic": "تلقيح",
+    "english": "pollination"
+  },
+  "0141": {
+    "arabic": "تطعيم",
+    "english": "inoculation"
+  },
+  "0142": {
+    "arabic": "أشعة ليزر",
+    "english": "laser ray"
+  },
+  "0143": {
+    "arabic": "مخدرات",
+    "english": "drug's"
+  },
+  "0144": {
+    "arabic": "إدمان",
+    "english": "addiction"
+  },
+  "0145": {
+    "arabic": "توحد / أوتيزم",
+    "english": "oneness"
+  },
+  "0146": {
+    "arabic": "منغولي",
+    "english": "mongoloid"
+  },
+  "0147": {
+    "arabic": "بكتريا",
+    "english": "bacterium"
+  },
+  "0148": {
+    "arabic": "جرثومة",
+    "english": "microbe"
+  },
+  "0149": {
+    "arabic": "فيروس",
+    "english": "virus"
+  },
+  "0150": {
+    "arabic": "إنتشار",
+    "english": "spread"
+  },
+  "0151": {
+    "arabic": "إعاقة",
+    "english": "hindrance"
+  },
+  "0152": {
+    "arabic": "إعاقة ذهنية",
+    "english": "mentality hindrance"
+  },
+  "0153": {
+    "arabic": "اعاقة جسدية",
+    "english": "physical disability"
+  },
+  "0154": {
+    "arabic": "اعاقة بصرية",
+    "english": "visual impairment"
+  },
+  "0155": {
+    "arabic": "إعاقة سمعية",
+    "english": "hearing hindrance"
+  },
+  "0156": {
+    "arabic": "وباء",
+    "english": "epidemic"
+  },
+  "0157": {
+    "arabic": "مناعة",
+    "english": "immunity"
+  },
+  "0158": {
+    "arabic": "عصب",
+    "english": "nerve"
+  },
+  "0159": {
+    "arabic": "معافى",
+    "english": "healthy"
+  },
+  "0160": {
+    "arabic": "يأكل",
+    "english": "eat"
+  },
+  "0161": {
+    "arabic": "يشرب",
+    "english": "drink"
+  },
+  "0162": {
+    "arabic": "ينام",
+    "english": "sleep"
+  },
+  "0163": {
+    "arabic": "يستيقظ",
+    "english": "wake up"
+  },
+  "0164": {
+    "arabic": "يسمع",
+    "english": "hear"
+  },
+  "0165": {
+    "arabic": "يسكت",
+    "english": "silence"
+  },
+  "0166": {
+    "arabic": "يشم",
+    "english": "inhale"
+  },
+  "0167": {
+    "arabic": "يصعد",
+    "english": "rise"
+  },
+  "0168": {
+    "arabic": "ينزل",
+    "english": "descend"
+  },
+  "0169": {
+    "arabic": "يفتح",
+    "english": "open"
+  },
+  "0170": {
+    "arabic": "يقفل ( يغلق )",
+    "english": "close"
+  },
+  "0171": {
+    "arabic": "يبني",
+    "english": "build"
+  },
+  "0172": {
+    "arabic": "يكسر",
+    "english": "break"
+  },
+  "0173": {
+    "arabic": "يمشي",
+    "english": "walk"
+  },
+  "0174": {
+    "arabic": "يحب",
+    "english": "love"
+  },
+  "0175": {
+    "arabic": "يكره",
+    "english": "hate"
+  },
+  "0176": {
+    "arabic": "يشوي",
+    "english": "grill"
+  },
+  "0177": {
+    "arabic": "يحرث",
+    "english": "plow"
+  },
+  "0178": {
+    "arabic": "يزرع",
+    "english": "plant"
+  },
+  "0179": {
+    "arabic": "يسقي",
+    "english": "irrigate"
+  },
+  "0180": {
+    "arabic": "يحصد",
+    "english": "harvest"
+  },
+  "0181": {
+    "arabic": "يفكر",
+    "english": "think"
+  },
+  "0182": {
+    "arabic": "يساعد",
+    "english": "help"
+  },
+  "0183": {
+    "arabic": "يدخن",
+    "english": "smoke"
+  },
+  "0184": {
+    "arabic": "يدعم",
+    "english": "support"
+  },
+  "0185": {
+    "arabic": "يختار",
+    "english": "choose"
+  },
+  "0186": {
+    "arabic": "ينادي",
+    "english": "call"
+  },
+  "0187": {
+    "arabic": "يتنامى",
+    "english": "grow"
+  },
+  "0188": {
+    "arabic": "يصبغ",
+    "english": "dye"
+  },
+  "0189": {
+    "arabic": "يقف",
+    "english": "stand"
+  },
+  "0190": {
+    "arabic": "يستحم",
+    "english": "bathe"
+  },
+  "0191": {
+    "arabic": "يدخل",
+    "english": "enter"
+  },
+  "0192": {
+    "arabic": "أسرة",
+    "english": "family"
+  },
+  "0193": {
+    "arabic": "جدة",
+    "english": "grandmother"
+  },
+  "0194": {
+    "arabic": "جد",
+    "english": "grandfather"
+  },
+  "0195": {
+    "arabic": "أب",
+    "english": "father"
+  },
+  "0196": {
+    "arabic": "أم",
+    "english": "mother"
+  },
+  "0197": {
+    "arabic": "أخت",
+    "english": "sister"
+  },
+  "0198": {
+    "arabic": "أخ",
+    "english": "brother"
+  },
+  "0199": {
+    "arabic": "بنت",
+    "english": "girl"
+  },
+  "0200": {
+    "arabic": "رضيع",
+    "english": "baby"
+  },
+  "0201": {
+    "arabic": "توأم",
+    "english": "twin"
+  },
+  "0202": {
+    "arabic": "رجل",
+    "english": "man"
+  },
+  "0203": {
+    "arabic": "شاب",
+    "english": "young man"
+  },
+  "0204": {
+    "arabic": "شابة",
+    "english": "young woman"
+  },
+  "0205": {
+    "arabic": "حفيد",
+    "english": "grandchild"
+  },
+  "0206": {
+    "arabic": "زواج",
+    "english": "wedding"
+  },
+  "0207": {
+    "arabic": "حمل",
+    "english": "pregnant"
+  },
+  "0208": {
+    "arabic": "ولادة",
+    "english": "childbirth"
+  },
+  "0209": {
+    "arabic": "عم",
+    "english": "uncle"
+  },
+  "0210": {
+    "arabic": "عمة",
+    "english": "aunt"
+  },
+  "0211": {
+    "arabic": "خال",
+    "english": "maternal uncle"
+  },
+  "0212": {
+    "arabic": "خالة",
+    "english": "maternal aunt"
+  },
+  "0213": {
+    "arabic": "ابن الأخ",
+    "english": "nephew"
+  },
+  "0214": {
+    "arabic": "ابن الأخت",
+    "english": "nephew"
+  },
+  "0215": {
+    "arabic": "ابن العم",
+    "english": "cousin"
+  },
+  "0216": {
+    "arabic": "ابن",
+    "english": "son"
+  },
+  "0217": {
+    "arabic": "ابنة",
+    "english": "daughter"
+  },
+  "0218": {
+    "arabic": "ناس",
+    "english": "people"
+  },
+  "0219": {
+    "arabic": "طلاق",
+    "english": "divorce"
+  },
+  "0220": {
+    "arabic": "خطوبة",
+    "english": "engagement"
+  },
+  "0221": {
+    "arabic": "حفلة",
+    "english": "party"
+  },
+  "0222": {
+    "arabic": "وفاة",
+    "english": "death"
+  },
+  "0223": {
+    "arabic": "طفل",
+    "english": "child"
+  },
+  "0224": {
+    "arabic": "جميل",
+    "english": "beautiful"
+  },
+  "0225": {
+    "arabic": "قبيح",
+    "english": "ugly"
+  },
+  "0226": {
+    "arabic": "طويل",
+    "english": "long"
+  },
+  "0227": {
+    "arabic": "قصير",
+    "english": "short"
+  },
+  "0228": {
+    "arabic": "نحيف",
+    "english": "thin"
+  },
+  "0229": {
+    "arabic": "سمين",
+    "english": "fat"
+  },
+  "0230": {
+    "arabic": "غني",
+    "english": "rich"
+  },
+  "0231": {
+    "arabic": "فقير",
+    "english": "poor"
+  },
+  "0232": {
+    "arabic": "محبط",
+    "english": "offended"
+  },
+  "0233": {
+    "arabic": "مشمئز",
+    "english": "disgusted"
+  },
+  "0234": {
+    "arabic": "مرتبك",
+    "english": "confused"
+  },
+  "0235": {
+    "arabic": "قلق",
+    "english": "worried"
+  },
+  "0236": {
+    "arabic": "مشوش",
+    "english": "deranged"
+  },
+  "0237": {
+    "arabic": "خائف",
+    "english": "afraid"
+  },
+  "0238": {
+    "arabic": "سعيد (مسرور)",
+    "english": "happy"
+  },
+  "0239": {
+    "arabic": "حزين",
+    "english": "sad"
+  },
+  "0240": {
+    "arabic": "شجاع",
+    "english": "courageous"
+  },
+  "0241": {
+    "arabic": "جبان",
+    "english": "coward"
+  },
+  "0242": {
+    "arabic": "طموح",
+    "english": "ambitious"
+  },
+  "0243": {
+    "arabic": "معجب",
+    "english": "admirable"
+  },
+  "0244": {
+    "arabic": "غائر من",
+    "english": "to be jealous of"
+  },
+  "0245": {
+    "arabic": "غائر على",
+    "english": "to protect jealously"
+  },
+  "0246": {
+    "arabic": "ودود",
+    "english": "affectionate"
+  },
+  "0247": {
+    "arabic": "كريم",
+    "english": "generous"
+  },
+  "0248": {
+    "arabic": "بخيل",
+    "english": "miserly"
+  },
+  "0249": {
+    "arabic": "طماع",
+    "english": "greedy"
+  },
+  "0250": {
+    "arabic": "كذاب",
+    "english": "liar"
+  },
+  "0251": {
+    "arabic": "أناني",
+    "english": "selfish"
+  },
+  "0252": {
+    "arabic": "متكبر",
+    "english": "proud"
+  },
+  "0253": {
+    "arabic": "متواضع",
+    "english": "humble"
+  },
+  "0254": {
+    "arabic": "شعور",
+    "english": "feeling"
+  },
+  "0255": {
+    "arabic": "تعب",
+    "english": "tired"
+  },
+  "0256": {
+    "arabic": "بكاء",
+    "english": "crying"
+  },
+  "0257": {
+    "arabic": "احتقار",
+    "english": "contempt"
+  },
+  "0258": {
+    "arabic": "اعتماد على الذات",
+    "english": "self-dependence"
+  },
+  "0259": {
+    "arabic": "خفيف",
+    "english": "light"
+  },
+  "0260": {
+    "arabic": "ثقيل",
+    "english": "heavy"
+  },
+  "0261": {
+    "arabic": "قديم",
+    "english": "old"
+  },
+  "0262": {
+    "arabic": "حسد",
+    "english": "envy"
+  },
+  "0263": {
+    "arabic": "صدق",
+    "english": "believe"
+  },
+  "0264": {
+    "arabic": "غدر",
+    "english": "betrayal"
+  },
+  "0265": {
+    "arabic": "صبر",
+    "english": "patient"
+  },
+  "0266": {
+    "arabic": "لوم",
+    "english": "blame"
+  },
+  "0267": {
+    "arabic": "الحق",
+    "english": "truth"
+  },
+  "0268": {
+    "arabic": "خيانة",
+    "english": "treason"
+  },
+  "0269": {
+    "arabic": "إيثار",
+    "english": "preference"
+  },
+  "0270": {
+    "arabic": "تضحية",
+    "english": "self sacrifice"
+  },
+  "0271": {
+    "arabic": "شفقة",
+    "english": "pity"
+  },
+  "0272": {
+    "arabic": "ذكي",
+    "english": "intelligent"
+  },
+  "0273": {
+    "arabic": "أمام",
+    "english": "in front of"
+  },
+  "0274": {
+    "arabic": "بجانب",
+    "english": "side"
+  },
+  "0275": {
+    "arabic": "بعيد",
+    "english": "far"
+  },
+  "0276": {
+    "arabic": "بين",
+    "english": "between"
+  },
+  "0277": {
+    "arabic": "تحت",
+    "english": "under"
+  },
+  "0278": {
+    "arabic": "حول",
+    "english": "around"
+  },
+  "0279": {
+    "arabic": "خارج",
+    "english": "outside"
+  },
+  "0280": {
+    "arabic": "خلف",
+    "english": "back"
+  },
+  "0281": {
+    "arabic": "داخل",
+    "english": "inside"
+  },
+  "0282": {
+    "arabic": "فوق",
+    "english": "up"
+  },
+  "0283": {
+    "arabic": "قريب",
+    "english": "near"
+  },
+  "0284": {
+    "arabic": "من خلال",
+    "english": "through"
+  },
+  "0285": {
+    "arabic": "هنا",
+    "english": "here"
+  },
+  "0286": {
+    "arabic": "هناك",
+    "english": "there"
+  },
+  "0287": {
+    "arabic": "يسار",
+    "english": "left"
+  },
+  "0288": {
+    "arabic": "يمين",
+    "english": "right"
+  },
+  "0289": {
+    "arabic": "أهلا وسهلاً",
+    "english": "welcome"
+  },
+  "0290": {
+    "arabic": "السلام عليكم",
+    "english": "greeting"
+  },
+  "0291": {
+    "arabic": "تفضل",
+    "english": "here you are"
+  },
+  "0292": {
+    "arabic": "جار",
+    "english": "neighbor"
+  },
+  "0293": {
+    "arabic": "شكراً",
+    "english": "thanks"
+  },
+  "0294": {
+    "arabic": "صديق",
+    "english": "friend"
+  },
+  "0295": {
+    "arabic": "ضيف",
+    "english": "guest"
+  },
+  "0296": {
+    "arabic": "عدو",
+    "english": "enemy"
+  },
+  "0297": {
+    "arabic": "عيب",
+    "english": "fault"
+  },
+  "0298": {
+    "arabic": "هدية",
+    "english": "gift"
+  },
+  "0299": {
+    "arabic": "بيت",
+    "english": "house"
+  },
+  "0300": {
+    "arabic": "جدار",
+    "english": "wall"
+  },
+  "0301": {
+    "arabic": "سقف",
+    "english": "roof"
+  },
+  "0302": {
+    "arabic": "باب",
+    "english": "door"
+  },
+  "0303": {
+    "arabic": "شباك",
+    "english": "window"
+  },
+  "0304": {
+    "arabic": "غرفة",
+    "english": "room"
+  },
+  "0305": {
+    "arabic": "غرفة نوم",
+    "english": "bedroom"
+  },
+  "0306": {
+    "arabic": "سرير",
+    "english": "bed"
+  },
+  "0307": {
+    "arabic": "مرتبة سرير ( حشية)",
+    "english": "mattress"
+  },
+  "0308": {
+    "arabic": "شرشف ( غطاء سرير)",
+    "english": "bedsheet"
+  },
+  "0309": {
+    "arabic": "وسادة ( مخدة)",
+    "english": "pillow"
+  },
+  "0310": {
+    "arabic": "شماعة ( مشجب)",
+    "english": "clothes rail"
+  },
+  "0311": {
+    "arabic": "خزانة ملابس",
+    "english": "wardrobe"
+  },
+  "0312": {
+    "arabic": "مطبخ",
+    "english": "kitchen"
+  },
+  "0313": {
+    "arabic": "فرن غازي",
+    "english": "Oven"
+  },
+  "0314": {
+    "arabic": "بوتاغاز (طابخ)",
+    "english": "cooker"
+  },
+  "0315": {
+    "arabic": "طبق ( صحن)",
+    "english": "dish"
+  },
+  "0316": {
+    "arabic": "سكين",
+    "english": "knife"
+  },
+  "0317": {
+    "arabic": "شوكة",
+    "english": "fork"
+  },
+  "0318": {
+    "arabic": "ملعقة",
+    "english": "spoon"
+  },
+  "0319": {
+    "arabic": "فنجان",
+    "english": "cupful"
+  },
+  "0320": {
+    "arabic": "مجمد (فريزر)",
+    "english": "freezer"
+  },
+  "0321": {
+    "arabic": "كأس ( كوب)",
+    "english": "cup"
+  },
+  "0322": {
+    "arabic": "حافظ حرارة ( ترمس)",
+    "english": "thermos"
+  },
+  "0323": {
+    "arabic": "غرفة طعام",
+    "english": "food room"
+  },
+  "0324": {
+    "arabic": "إبريق",
+    "english": "pitcher"
+  },
+  "0325": {
+    "arabic": "طاولة",
+    "english": "table"
+  },
+  "0326": {
+    "arabic": "كنكة ( دلة)",
+    "english": "dalah"
+  },
+  "0327": {
+    "arabic": "دورة مياه (حمام)",
+    "english": "bathroom"
+  },
+  "0328": {
+    "arabic": "كرسي",
+    "english": "chair"
+  },
+  "0329": {
+    "arabic": "غسالة",
+    "english": "washing machine"
+  },
+  "0330": {
+    "arabic": "منشفة",
+    "english": "towel carpet"
+  },
+  "0331": {
+    "arabic": "سجادة (زربية)",
+    "english": "carpet"
+  },
+  "0332": {
+    "arabic": "موكيت ( فرش أرضي) moquette",
+    "english": "moquette"
+  },
+  "0333": {
+    "arabic": "ثريا (نجفة)",
+    "english": "chandelier"
+  },
+  "0334": {
+    "arabic": "مسجل",
+    "english": "cassette"
+  },
+  "0335": {
+    "arabic": "شريط كاست",
+    "english": "cassette tape"
+  },
+  "0336": {
+    "arabic": "تلفزيون (تلفاز)",
+    "english": "television"
+  },
+  "0337": {
+    "arabic": "طبق هوائي (دش)",
+    "english": "satellite"
+  },
+  "0338": {
+    "arabic": "شريط فيديو",
+    "english": "video tape"
+  },
+  "0339": {
+    "arabic": "كاميرا فيديو",
+    "english": "video camera"
+  },
+  "0340": {
+    "arabic": "كاميرا فوتوغرافية",
+    "english": "photo camera"
+  },
+  "0341": {
+    "arabic": "هاتف ( تلفون)",
+    "english": "telephone"
+  },
+  "0342": {
+    "arabic": "غرفة ضيوف",
+    "english": "guests room"
+  },
+  "0343": {
+    "arabic": "فيديو",
+    "english": "video"
+  },
+  "0344": {
+    "arabic": "مبخرة",
+    "english": "censer"
+  },
+  "0345": {
+    "arabic": "مدفأة",
+    "english": "heater"
+  },
+  "0346": {
+    "arabic": "مفتاح",
+    "english": "key"
+  },
+  "0347": {
+    "arabic": "مروحة",
+    "english": "fan"
+  },
+  "0348": {
+    "arabic": "تدفئة مركزية",
+    "english": "central heater"
+  },
+  "0349": {
+    "arabic": "كهرباء",
+    "english": "electrics"
+  },
+  "0350": {
+    "arabic": "مكيف",
+    "english": "air conditioner"
+  },
+  "0351": {
+    "arabic": "سلك كهربائي",
+    "english": "wire"
+  },
+  "0352": {
+    "arabic": "قابس كهربائي ( فيش)",
+    "english": "plug"
+  },
+  "0353": {
+    "arabic": "حقيبة سفر",
+    "english": "bag"
+  },
+  "0354": {
+    "arabic": "مكواة",
+    "english": "iron"
+  },
+  "0355": {
+    "arabic": "ميزان حرارة جوي",
+    "english": "thermometer"
+  },
+  "0356": {
+    "arabic": "الله تعالى",
+    "english": "God"
+  },
+  "0357": {
+    "arabic": "محمد رسول الله",
+    "english": "Muhammad is the Messenger of Allah"
+  },
+  "0358": {
+    "arabic": "عيسى المسيح",
+    "english": "Essa Christ"
+  },
+  "0359": {
+    "arabic": "القرآن الكريم",
+    "english": "The Holy Quran"
+  },
+  "0360": {
+    "arabic": "الخلفاء الراشدون",
+    "english": "Rightly Guided Caliphs"
+  },
+  "0361": {
+    "arabic": "السنة النبوية",
+    "english": "Sunnah"
+  },
+  "0362": {
+    "arabic": "أركان الإسلام",
+    "english": "Pillars of Islam"
+  },
+  "0363": {
+    "arabic": "أركان الإيمان",
+    "english": "Pillars of Faith"
+  },
+  "0364": {
+    "arabic": "الشهادتين",
+    "english": "The two certificates"
+  },
+  "0365": {
+    "arabic": "يصلي / الصلاة",
+    "english": "pray"
+  },
+  "0366": {
+    "arabic": "الزكاة",
+    "english": "zakat"
+  },
+  "0367": {
+    "arabic": "الصوم",
+    "english": "Fasting"
+  },
+  "0368": {
+    "arabic": "العمرة",
+    "english": "Umrah"
+  },
+  "0369": {
+    "arabic": "الحج",
+    "english": "Pilgrimage"
+  },
+  "0370": {
+    "arabic": "ملائكة",
+    "english": "Angels"
+  },
+  "0371": {
+    "arabic": "رسول",
+    "english": "messenger"
+  },
+  "0372": {
+    "arabic": "يوم القيامة",
+    "english": "Doomsday"
+  },
+  "0373": {
+    "arabic": "القضاء والقدر",
+    "english": "Fate and destiny"
+  },
+  "0374": {
+    "arabic": "أركان الصلاة",
+    "english": "Pillars of prayer"
+  },
+  "0375": {
+    "arabic": "خير",
+    "english": "Good"
+  },
+  "0376": {
+    "arabic": "النية",
+    "english": "Intention"
+  },
+  "0377": {
+    "arabic": "شر",
+    "english": "Evil"
+  },
+  "0378": {
+    "arabic": "طهارة",
+    "english": "purity"
+  },
+  "0379": {
+    "arabic": "مبطلات الصلاة",
+    "english": "Prayer invalidators"
+  },
+  "0380": {
+    "arabic": "تيمم",
+    "english": "tayammum"
+  },
+  "0381": {
+    "arabic": "يتوضأ / وضوء",
+    "english": "ablution"
+  },
+  "0382": {
+    "arabic": "يؤذن",
+    "english": "authorized"
+  },
+  "0383": {
+    "arabic": "مسح على الخفين",
+    "english": "Wipe on the slippers"
+  },
+  "0384": {
+    "arabic": "صلاة الفجر",
+    "english": "Al-fajr prayer"
+  },
+  "0385": {
+    "arabic": "صلاة الظهر",
+    "english": "Salat Aduher"
+  },
+  "0386": {
+    "arabic": "صلاة العصر",
+    "english": "Asr prayer"
+  },
+  "0387": {
+    "arabic": "صلاة المغرب",
+    "english": "Maghreb's prayer"
+  },
+  "0388": {
+    "arabic": "صلاة العشاء",
+    "english": "eshaa pray"
+  },
+  "0389": {
+    "arabic": "خطبة",
+    "english": "speech"
+  },
+  "0390": {
+    "arabic": "خطبة الجمعة",
+    "english": "Friday sermon"
+  },
+  "0391": {
+    "arabic": "خطيب",
+    "english": "Fiance"
+  },
+  "0392": {
+    "arabic": "خطبة العيد",
+    "english": "Eid sermon"
+  },
+  "0393": {
+    "arabic": "مسجد",
+    "english": "Mosque"
+  },
+  "0394": {
+    "arabic": "سورة",
+    "english": "surah"
+  },
+  "0395": {
+    "arabic": "إمام",
+    "english": "Before"
+  },
+  "0396": {
+    "arabic": "سورة الفاتحة",
+    "english": "Al-Fatihah"
+  },
+  "0397": {
+    "arabic": "آية",
+    "english": "any"
+  },
+  "0398": {
+    "arabic": "ليلة القدر",
+    "english": "Night of Power"
+  },
+  "0399": {
+    "arabic": "عيد",
+    "english": "Feast"
+  },
+  "0400": {
+    "arabic": "عيد الفطر",
+    "english": "Eid al-Fitr"
+  },
+  "0401": {
+    "arabic": "عيد الأضحى",
+    "english": "Eid al-Adha"
+  },
+  "0402": {
+    "arabic": "إحرام",
+    "english": "Ihram"
+  },
+  "0403": {
+    "arabic": "مكة",
+    "english": "Mecca"
+  },
+  "0404": {
+    "arabic": "الكعبة",
+    "english": "Kaaba"
+  },
+  "0405": {
+    "arabic": "المدينة المنورة",
+    "english": "Medina"
+  },
+  "0406": {
+    "arabic": "منى",
+    "english": "Mona"
+  },
+  "0407": {
+    "arabic": "جبل عرفات",
+    "english": "Arafat Mountain"
+  },
+  "0408": {
+    "arabic": "الصفا والمروة",
+    "english": "Safa and Marwa"
+  },
+  "0409": {
+    "arabic": "مزدلفة",
+    "english": "Muzdalifah"
+  },
+  "0410": {
+    "arabic": "رمي الجمرات",
+    "english": "Throwing pebbles"
+  },
+  "0411": {
+    "arabic": "طواف",
+    "english": "circumambulation"
+  },
+  "0412": {
+    "arabic": "ماء زمزم",
+    "english": "Zamzam water"
+  },
+  "0413": {
+    "arabic": "الأضحية",
+    "english": "the sacrifice"
+  },
+  "0414": {
+    "arabic": "فك الإحرام",
+    "english": "break the ihram"
+  },
+  "0415": {
+    "arabic": "طواف الوداع",
+    "english": "farewell circumambulation"
+  },
+  "0416": {
+    "arabic": "المسجد الأقصى",
+    "english": "Al-Aqsa Mosque"
+  },
+  "0417": {
+    "arabic": "يسبح",
+    "english": "swim"
+  },
+  "0418": {
+    "arabic": "الحمد لله",
+    "english": "Thank God"
+  },
+  "0419": {
+    "arabic": "سبحان الله",
+    "english": "How great is our God"
+  },
+  "0420": {
+    "arabic": "إيمان",
+    "english": "Faith"
+  },
+  "0421": {
+    "arabic": "الشرك بالله",
+    "english": "Polytheism"
+  },
+  "0422": {
+    "arabic": "أعوذ بالله",
+    "english": "I seek refuge in God"
+  },
+  "0423": {
+    "arabic": "شيطان",
+    "english": "Satan"
+  },
+  "0424": {
+    "arabic": "جن",
+    "english": "genie"
+  },
+  "0425": {
+    "arabic": "الضالون",
+    "english": "the lost"
+  },
+  "0426": {
+    "arabic": "المغضوب عليهم",
+    "english": "angered them"
+  },
+  "0427": {
+    "arabic": "صنم",
+    "english": "fetish"
+  },
+  "0428": {
+    "arabic": "زنى",
+    "english": "fornication"
+  },
+  "0429": {
+    "arabic": "الجنة",
+    "english": "the Paradise"
+  },
+  "0430": {
+    "arabic": "النار",
+    "english": "fire"
+  },
+  "0431": {
+    "arabic": "روح",
+    "english": "spirit"
+  },
+  "0432": {
+    "arabic": "حقوق",
+    "english": "rights"
+  },
+  "0433": {
+    "arabic": "واجبات",
+    "english": "Duties"
+  },
+  "0434": {
+    "arabic": "حسنات",
+    "english": "Deeds"
+  },
+  "0435": {
+    "arabic": "سيئات",
+    "english": "sins"
+  },
+  "0436": {
+    "arabic": "حلال",
+    "english": "halal"
+  },
+  "0437": {
+    "arabic": "حرام",
+    "english": "forbidden"
+  },
+  "0438": {
+    "arabic": "مغفرة",
+    "english": "forgiveness"
+  },
+  "0439": {
+    "arabic": "دين",
+    "english": "religion"
+  },
+  "0440": {
+    "arabic": "مسيحي",
+    "english": "Christian"
+  },
+  "0441": {
+    "arabic": "يهودي",
+    "english": "Jewish"
+  },
+  "0442": {
+    "arabic": "كنيسة",
+    "english": "church"
+  },
+  "0443": {
+    "arabic": "إسراء ومعراج",
+    "english": "Isra and Miraj"
+  },
+  "0444": {
+    "arabic": "حواء",
+    "english": "Eve"
+  },
+  "0445": {
+    "arabic": "آدم",
+    "english": "Adam"
+  },
+  "0446": {
+    "arabic": "صدقة",
+    "english": "charity"
+  },
+  "0447": {
+    "arabic": "نبي",
+    "english": "Prophet"
+  },
+  "0448": {
+    "arabic": "هداية",
+    "english": "guidance"
+  },
+  "0449": {
+    "arabic": "أمانة",
+    "english": "honesty"
+  },
+  "0450": {
+    "arabic": "شهيد",
+    "english": "martyr"
+  },
+  "0451": {
+    "arabic": "حقوق الوالدين",
+    "english": "Parental rights"
+  },
+  "0452": {
+    "arabic": "عقوق الوالدين",
+    "english": "Disobedience to parents"
+  },
+  "0453": {
+    "arabic": "مسلم",
+    "english": "Muslim"
+  },
+  "0454": {
+    "arabic": "رحمة",
+    "english": "Mercy"
+  },
+  "0455": {
+    "arabic": "عيد رأس السنة",
+    "english": "New Year's Holiday"
+  },
+  "0456": {
+    "arabic": "فروض",
+    "english": "homework"
+  },
+  "0457": {
+    "arabic": "قبة الصخرة",
+    "english": "Dome of the Rock"
+  },
+  "0458": {
+    "arabic": "خلق",
+    "english": "Create"
+  },
+  "0459": {
+    "arabic": "مهندس",
+    "english": "engineer"
+  },
+  "0460": {
+    "arabic": "مصور فوتوغرافي",
+    "english": "photographer"
+  },
+  "0461": {
+    "arabic": "جزار / قصاب",
+    "english": "Meat man"
+  },
+  "0462": {
+    "arabic": "سائق",
+    "english": "driver"
+  },
+  "0463": {
+    "arabic": "صائغ",
+    "english": "jeweler"
+  },
+  "0464": {
+    "arabic": "خادم",
+    "english": "servant"
+  },
+  "0465": {
+    "arabic": "رئيس قسم",
+    "english": "chairman"
+  },
+  "0466": {
+    "arabic": "حداد",
+    "english": "blacksmith"
+  },
+  "0467": {
+    "arabic": "لحام كهربائي",
+    "english": "weld"
+  },
+  "0468": {
+    "arabic": "مترجم لغة الإشارة",
+    "english": "Sign language translator"
+  },
+  "0469": {
+    "arabic": "مذيع",
+    "english": "announcer"
+  },
+  "0470": {
+    "arabic": "مترجم لغات",
+    "english": "translator"
+  },
+  "0471": {
+    "arabic": "مدير",
+    "english": "manager"
+  },
+  "0472": {
+    "arabic": "سفير",
+    "english": "ambassador"
+  },
+  "0473": {
+    "arabic": "وزير",
+    "english": "minister"
+  },
+  "0474": {
+    "arabic": "ملك / سلطان",
+    "english": "King"
+  },
+  "0475": {
+    "arabic": "أمير البلاد / رئيس الجمهورية",
+    "english": "Premier Minister"
+  },
+  "0476": {
+    "arabic": "شيخ",
+    "english": "sheikh"
+  },
+  "0477": {
+    "arabic": "محافظ / وال",
+    "english": "governor"
+  },
+  "0478": {
+    "arabic": "ولي عهد / وكيل وزارة",
+    "english": "under secretary of state"
+  },
+  "0479": {
+    "arabic": "رئيس مجلس الشعب (النواب)",
+    "english": "speaker"
+  },
+  "0480": {
+    "arabic": "أمين عام",
+    "english": "general secretary"
+  },
+  "0481": {
+    "arabic": "صحفي",
+    "english": "journalist"
+  },
+  "0482": {
+    "arabic": "رسام",
+    "english": "draftsman"
+  },
+  "0483": {
+    "arabic": "خياط / تارزي",
+    "english": "tailor"
+  },
+  "0484": {
+    "arabic": "ضابط",
+    "english": "policeman"
+  },
+  "0485": {
+    "arabic": "طيار",
+    "english": "pilot"
+  },
+  "0486": {
+    "arabic": "جندي",
+    "english": "soldier"
+  },
+  "0487": {
+    "arabic": "حلاق",
+    "english": "barber"
+  },
+  "0488": {
+    "arabic": "صباغ",
+    "english": "dyer"
+  },
+  "0489": {
+    "arabic": "رجل إطفاء / دفاع مدني",
+    "english": "fireman"
+  },
+  "0490": {
+    "arabic": "نجار",
+    "english": "carpenter"
+  },
+  "0491": {
+    "arabic": "معلم / مدرس",
+    "english": "teacher"
+  },
+  "0492": {
+    "arabic": "طباخ",
+    "english": "chef"
+  },
+  "0493": {
+    "arabic": "فلاح",
+    "english": "farmer"
+  },
+  "0494": {
+    "arabic": "موظف",
+    "english": "agent"
+  },
+  "0495": {
+    "arabic": "أمين صندوق",
+    "english": "treasurer"
+  },
+  "0496": {
+    "arabic": "صيدلي",
+    "english": "pharmacist"
+  },
+  "0497": {
+    "arabic": "طبيب",
+    "english": "doctor"
+  },
+  "0498": {
+    "arabic": "ممرضة",
+    "english": "nurse"
+  },
+  "0499": {
+    "arabic": "ممرض",
+    "english": "orderly"
+  },
+  "0500": {
+    "arabic": "محام",
+    "english": "lawyer"
+  },
+  "0501": {
+    "arabic": "انتقال",
+    "english": "traveling"
+  },
+  "0502": {
+    "arabic": "تعيين",
+    "english": "appointment"
+  }
+}
