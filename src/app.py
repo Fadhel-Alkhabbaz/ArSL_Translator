@@ -16,6 +16,7 @@
 """
 
 import json
+import os
 import time
 from collections import deque
 
@@ -36,11 +37,12 @@ import io
 # ============================================================
 # 0. الإعدادات الثابتة (يمكن التحكم ببعضها لاحقًا من الشريط الجانبي)
 # ============================================================
-MODEL_PATH = "sign_lstm_model_focused.pth"
-IDX_TO_CLASS_PATH = "idx_to_class_focused.json"
-LABELS_PATH = "karsl_labels.json"
-POSE_MODEL_PATH = "pose_landmarker.task"
-HAND_MODEL_PATH = "hand_landmarker.task"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # مجلد src/ نفسه، بغض النظر عن مكان تشغيل التطبيق
+MODEL_PATH = os.path.join(BASE_DIR, "..", "outputs", "models", "sign_lstm_model_focused.pth")
+IDX_TO_CLASS_PATH = os.path.join(BASE_DIR, "..", "outputs", "models", "idx_to_class_focused.json")
+LABELS_PATH = os.path.join(BASE_DIR, "..", "data", "metadata", "karsl_labels.json")
+POSE_MODEL_PATH = os.path.join(BASE_DIR, "..", "outputs", "models", "pose_landmarker.task")
+HAND_MODEL_PATH = os.path.join(BASE_DIR, "..", "outputs", "models", "hand_landmarker.task")
 
 TARGET_SEQ_LEN = 30
 MIN_SEGMENT_FRAMES = 8
