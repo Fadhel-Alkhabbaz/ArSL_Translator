@@ -50,23 +50,24 @@ MAX_SEGMENT_FRAMES = 90
 IDLE_FRAMES_TO_CLOSE = 8
 DISPLAY_LANG_LABEL = "arabic"
 
-RTC_CONFIGURATION = RTCConfiguration({
-    "iceServers": [
-        {"urls": ["stun:stun.l.google.com:19302"]},
-        # خادم TURN مجاني (Open Relay Project) — ضروري لإتمام الاتصال عبر شبكات
-        # كثيرة لا يكفيها STUN وحده، خصوصًا على استضافة سحابية مثل Streamlit Cloud.
-        {
-            "urls": ["turn:openrelay.metered.ca:80"],
-            "username": "openrelayproject",
-            "credential": "openrelayproject",
-        },
-        {
-            "urls": ["turn:openrelay.metered.ca:443"],
-            "username": "openrelayproject",
-            "credential": "openrelayproject",
-        },
-    ]
-})
+@st.cache_data(ttl=3000)  # صلاحية رمز Twilio عادة ساعة — نجدّده كل 50 دقيقة احتياطيًا
+def get_ice_servers():
+    """يجلب قائمة خوادم STUN/TURN مباشرة من Twilio (مستقرة وموثوقة)، مع بديل
+    احتياطي (STUN فقط من جوجل) إذا لم تكن بيانات Twilio متوفرة في secrets —
+    يسمح هذا للتطبيق بالعمل محليًا أو أثناء التطوير بدون حساب Twilio."""
+    account_sid = st.secrets.get("TWILIO_ACCOUNT_SID")
+    auth_token = st.secrets.get("TWILIO_AUTH_TOKEN")
+
+    if not account_sid or not auth_token:
+        return [{"urls": ["stun:stun.l.google.com:19302"]}]
+
+    from twilio.rest import Client
+    client = Client(account_sid, auth_token)
+    token = client.tokens.create()
+    return token.ice_servers
+
+
+RTC_CONFIGURATION = RTCConfiguration({"iceServers": get_ice_servers()})
 
 
 # ============================================================

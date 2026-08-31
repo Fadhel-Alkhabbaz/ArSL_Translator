@@ -10,3 +10,4 @@ openai
 gTTS
 py7zr
 tqdm
+twilio
